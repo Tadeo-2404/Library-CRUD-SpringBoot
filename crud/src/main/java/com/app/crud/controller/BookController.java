@@ -19,8 +19,23 @@ public class BookController {
     }
 
     @GetMapping
-    public List<Book> getBooks() {
-        return bookService.getBooks();
+    public List<Book> getBooks(@RequestParam(required = false) String title, @RequestParam(required = false) String author,
+                               @RequestParam(required = false) String genre,
+                               @RequestParam(required = false) String ISBN,
+                               @RequestParam(required = false) Integer amount) {
+        if (title != null) {
+            return bookService.getBooksByTitle(title);
+        } else if (author != null) {
+            return bookService.getBooksByAuthor(author);
+        } else if (genre != null) {
+            return bookService.getBooksByGenre(genre);
+        } else if (amount != null) {
+            return bookService.getBooksByAmount(amount);
+        } else if (ISBN != null) {
+            return bookService.getBooksByISBN(ISBN);
+        }else {
+            return bookService.getBooks();
+        }
     }
 
     @PostMapping

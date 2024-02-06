@@ -23,6 +23,26 @@ public class BookService {
         return this.bookRepository.findAll();
     }
 
+    public List<Book> getBooksByISBN(String ISBN) {
+        return bookRepository.findByISBN(ISBN);
+    }
+
+    public List<Book> getBooksByTitle(String title) {
+        return bookRepository.findByTitle(title);
+    }
+
+    public List<Book> getBooksByAuthor(String author) {
+        return bookRepository.findByAuthor(author);
+    }
+
+    public List<Book> getBooksByGenre(String genre) {
+        return bookRepository.findByGenre(genre);
+    }
+
+    public List<Book> getBooksByAmount(int amount) {
+        return bookRepository.findByAmount(amount);
+    }
+
     public ResponseEntity<Object> newProduct(Book book) {
         HashMap<String, Object> message = new HashMap<>();
         try {
