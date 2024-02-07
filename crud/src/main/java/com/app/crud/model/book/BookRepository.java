@@ -1,4 +1,4 @@
-package com.app.crud.book;
+package com.app.crud.model.book;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

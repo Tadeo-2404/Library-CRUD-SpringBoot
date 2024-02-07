@@ -1,6 +1,6 @@
 package com.app.crud.controller;
 
-import com.app.crud.book.Book;
+import com.app.crud.model.book.Book;
 import com.app.crud.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

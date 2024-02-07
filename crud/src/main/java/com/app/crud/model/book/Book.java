@@ -1,4 +1,4 @@
-package com.app.crud.book;
+package com.app.crud.model.book;
 
 import jakarta.persistence.*;
 
