@@ -19,5 +19,9 @@ public class Address {
     @OneToOne
     @JoinColumn(name = "member_id", referencedColumnName = "memberId")
     private Member member;
+
+    public Member getMember() {
+        return member;
+    }
 }
 

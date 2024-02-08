@@ -14,11 +14,17 @@ public class Member {
     @Column(name = "memberId")
     private String memberId;
     private String name;
+    private String lastname;
     private int age;
 
+    @OneToOne(mappedBy = "member")
+    private Address address;
+
     public Member() {};
-    public Member(String name) {
+    public Member(String name, String lastname, int age) {
         this.name = name;
+        this.age = age;
+        this.lastname = lastname;
     }
 
     public void setMemberId(String memberId) {
@@ -29,10 +35,18 @@ public class Member {
         this.name = name;
     }
 
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
     public void setAge(int age) { this.age = age; }
 
     public String getName() {
         return this.name;
+    }
+
+    public String getLastname() {
+        return lastname;
     }
 
     public String getMemberId() {
