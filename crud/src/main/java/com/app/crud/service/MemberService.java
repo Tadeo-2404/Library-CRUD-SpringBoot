@@ -1,5 +1,6 @@
 package com.app.crud.service;
 
+import com.app.crud.model.address.Address;
 import com.app.crud.model.address.AddressRepository;
 import com.app.crud.model.member.Member;
 import com.app.crud.model.member.MemberRepository;
@@ -54,24 +55,42 @@ public class MemberService {
     }
 
     public ResponseEntity<Object> addMember(Member member) {
-        System.out.println(member);
         HashMap<String, Object> message = new HashMap<>();
+        Member memberToBeSaved = new Member(member.getName(), member.getLastname(), member.getAge());
         try {
-            message.put("success", member);
+            // Check if the member already exists
+            if (memberRepository.existsById(member.getMemberId())) {
+                message.put("error", true);
+                message.put("message", "Member already exists");
+                return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+            }
+
+            // Save the member
+            Member memberSaved = this.memberRepository.save(memberToBeSaved);
+
+            // Create a new address object
+            Address address = new Address();
+            address.setStreet(member.getAddress().getStreet());
+            address.setCity(member.getAddress().getCity());
+            address.setState(member.getAddress().getState());
+            address.setPostalCode(member.getAddress().getPostalCode());
+            address.setMember(memberSaved);
+
+            // Save the address
+            Address addressSaved = this.addressRepository.save(address);
+
+            // Update the member with the address
+            memberSaved.setAddress(addressSaved);
+            memberRepository.save(memberSaved);
+
+            message.put("success", memberSaved);
             message.put("message", "Member created successfully");
 
-            this.memberRepository.save(member);
-            return new ResponseEntity<>(
-                    message,
-                    HttpStatus.CREATED
-            );
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
         } catch (Exception e) {
             message.put("error", true);
             message.put("message", "Something went wrong");
-            return new ResponseEntity<>(
-                    message,
-                    HttpStatus.CONFLICT
-            );
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
     }
 }

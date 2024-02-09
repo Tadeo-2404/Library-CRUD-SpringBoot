@@ -56,4 +56,12 @@ public class Member {
     public int getAge() {
         return age;
     }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
 }
