@@ -1,9 +1,8 @@
 package com.app.crud.service;
 
 import com.app.crud.model.address.Address;
-import com.app.crud.model.address.AddressRepository;
-import com.app.crud.model.member.Member;
-import com.app.crud.model.member.MemberRepository;
+import com.app.crud.repository.AddressRepository;
+import com.app.crud.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

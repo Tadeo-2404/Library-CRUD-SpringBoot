@@ -1,5 +1,6 @@
-package com.app.crud.model.address;
+package com.app.crud.repository;
 
+import com.app.crud.model.address.Address;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

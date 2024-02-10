@@ -1,9 +1,9 @@
 package com.app.crud.service;
 
 import com.app.crud.model.address.Address;
-import com.app.crud.model.address.AddressRepository;
+import com.app.crud.repository.AddressRepository;
 import com.app.crud.model.member.Member;
-import com.app.crud.model.member.MemberRepository;
+import com.app.crud.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,26 +54,13 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
-    public ResponseEntity<Object> addMember(Member member) {
+    public ResponseEntity<Object> addMember(Member member, Address address) {
         HashMap<String, Object> message = new HashMap<>();
-        Member memberToBeSaved = new Member(member.getName(), member.getLastname(), member.getAge());
         try {
-            // Check if the member already exists
-            if (memberRepository.existsById(member.getMemberId())) {
-                message.put("error", true);
-                message.put("message", "Member already exists");
-                return new ResponseEntity<>(message, HttpStatus.CONFLICT);
-            }
-
             // Save the member
-            Member memberSaved = this.memberRepository.save(memberToBeSaved);
+            Member memberSaved = this.memberRepository.save(member);
 
-            // Create a new address object
-            Address address = new Address();
-            address.setStreet(member.getAddress().getStreet());
-            address.setCity(member.getAddress().getCity());
-            address.setState(member.getAddress().getState());
-            address.setPostalCode(member.getAddress().getPostalCode());
+            //add member to address
             address.setMember(memberSaved);
 
             // Save the address
@@ -81,15 +68,14 @@ public class MemberService {
 
             // Update the member with the address
             memberSaved.setAddress(addressSaved);
+
+            //save the member changes
             memberRepository.save(memberSaved);
 
-            message.put("success", memberSaved);
             message.put("message", "Member created successfully");
-
             return new ResponseEntity<>(message, HttpStatus.CREATED);
         } catch (Exception e) {
-            message.put("error", true);
-            message.put("message", "Something went wrong");
+            message.put("message", e.getMessage());
             return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
     }
