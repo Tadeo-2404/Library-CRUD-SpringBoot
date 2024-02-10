@@ -1,7 +1,7 @@
 package com.app.crud.service;
 
 import com.app.crud.model.book.Book;
-import com.app.crud.model.book.BookRepository;
+import com.app.crud.repository.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

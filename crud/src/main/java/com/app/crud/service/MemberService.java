@@ -1,8 +1,9 @@
 package com.app.crud.service;
 
-import com.app.crud.model.address.AddressRepository;
+import com.app.crud.model.address.Address;
+import com.app.crud.repository.AddressRepository;
 import com.app.crud.model.member.Member;
-import com.app.crud.model.member.MemberRepository;
+import com.app.crud.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,25 +54,29 @@ public class MemberService {
                 .collect(Collectors.toList());
     }
 
-    public ResponseEntity<Object> addMember(Member member) {
-        System.out.println(member);
+    public ResponseEntity<Object> addMember(Member member, Address address) {
         HashMap<String, Object> message = new HashMap<>();
         try {
-            message.put("success", member);
-            message.put("message", "Member created successfully");
+            // Save the member
+            Member memberSaved = this.memberRepository.save(member);
 
-            this.memberRepository.save(member);
-            return new ResponseEntity<>(
-                    message,
-                    HttpStatus.CREATED
-            );
+            //add member to address
+            address.setMember(memberSaved);
+
+            // Save the address
+            Address addressSaved = this.addressRepository.save(address);
+
+            // Update the member with the address
+            memberSaved.setAddress(addressSaved);
+
+            //save the member changes
+            memberRepository.save(memberSaved);
+
+            message.put("message", "Member created successfully");
+            return new ResponseEntity<>(message, HttpStatus.CREATED);
         } catch (Exception e) {
-            message.put("error", true);
-            message.put("message", "Something went wrong");
-            return new ResponseEntity<>(
-                    message,
-                    HttpStatus.CONFLICT
-            );
+            message.put("message", e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
     }
 }

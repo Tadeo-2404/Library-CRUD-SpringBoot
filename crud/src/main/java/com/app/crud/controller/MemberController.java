@@ -1,9 +1,11 @@
 package com.app.crud.controller;
 
+import com.app.crud.model.address.Address;
 import com.app.crud.model.book.Book;
 import com.app.crud.model.member.Member;
 import com.app.crud.service.BookService;
 import com.app.crud.service.MemberService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,9 +35,28 @@ public class MemberController {
         }
     }
 
-    @PostMapping
-    public ResponseEntity<Object> registerMember(@RequestBody Member member) {
-        return this.memberService.addMember(member);
+    public static class MemberRegistrationRequest {
+        private Member member;
+        private Address address;
+
+        public Member getMember() {
+            return member;
+        }
+
+        public Address getAddress() {
+            return address;
+        }
     }
 
+    @PostMapping
+    public ResponseEntity<Object> registerMember(@RequestBody MemberRegistrationRequest request) {
+        Member member = request.getMember();
+        Address address = request.getAddress();
+
+        System.out.println(member.getLastname());
+        System.out.println(address.getCity());
+        System.out.println("aqui termina el controller :)");
+
+        return this.memberService.addMember(member, address);
+    }
 }

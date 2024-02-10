@@ -1,64 +1,28 @@
 package com.app.crud.model.book;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table
+@Table(name = "book")
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "ISBN", unique = true, nullable = false)
     private String ISBN;
+    @Column(name = "title", unique = false, nullable = false, length = 50)
     private String title;
+    @Column(name = "author", unique = false, nullable = false, length = 50)
     private String author;
+    @Column(name = "genre", unique = false, nullable = false, length = 50)
     private String genre;
+    @Column(name = "amount", unique = false, nullable = false)
     private int amount;
-
-    public Book() {}
-    public Book(String ISBN, String title, String author, String genre, int amount) {
-        this.ISBN = ISBN;
-        this.title = title;
-        this.author = author;
-        this.genre = genre;
-        this.amount = amount;
-    }
-
-    public String getISBN() {
-        return ISBN;
-    }
-
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
-
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
 }
