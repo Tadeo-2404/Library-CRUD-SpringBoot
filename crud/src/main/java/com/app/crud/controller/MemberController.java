@@ -23,13 +23,15 @@ public class MemberController {
     }
 
     @GetMapping
-    public List<Member> getMembers(@RequestParam(required = false) String name, @RequestParam(required = false) String lastname, @RequestParam(required = false) Integer age) {
+    public List<Member> getMembers(@RequestParam(required = false) String name, @RequestParam(required = false) String lastname, @RequestParam(required = false) Integer age, @RequestParam(required = false) String city) {
         if (name != null) {
             return memberService.getMemberByName(name);
         } else if (lastname != null) {
             return memberService.getMemberByLastname(lastname);
         } else if (age != null) {
             return memberService.getMemberByAge(age);
+        } else if(city != null) {
+            return memberService.getMembersByCity(city);
         } else {
             return memberService.getMembers();
         }
@@ -52,11 +54,6 @@ public class MemberController {
     public ResponseEntity<Object> registerMember(@RequestBody MemberRegistrationRequest request) {
         Member member = request.getMember();
         Address address = request.getAddress();
-
-        System.out.println(member.getLastname());
-        System.out.println(address.getCity());
-        System.out.println("aqui termina el controller :)");
-
         return this.memberService.addMember(member, address);
     }
 }

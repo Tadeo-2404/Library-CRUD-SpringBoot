@@ -3,6 +3,7 @@ package com.app.crud.model.member;
 import com.app.crud.model.address.Address;
 import com.app.crud.model.book.Book;
 import com.app.crud.model.memberBook.MemberBook;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,6 +29,7 @@ public class Member {
     private int age;
 
     @OneToOne(mappedBy = "member")
+    @JsonIgnore
     private Address address;
 
 }
