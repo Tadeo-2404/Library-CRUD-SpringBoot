@@ -90,6 +90,84 @@ public class MemberService {
                 .map(address -> address.getMember())
                 .collect(Collectors.toList());
     }
+    // Get members by city and street
+    public List<Member> getMembersByCityAndStreet(String street, String city) {
+        return addressRepository.findByStreetAndCity(street, city)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    // Get members by street and state
+    public List<Member> getMembersByStreetAndState(String street, String state) {
+        return addressRepository.findByStreetAndState(street, state)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    // Get members by street and postal code
+    public List<Member> getMembersByStreetAndPostalCode(String street, String postalCode) {
+        return addressRepository.findByStreetAndPostalCode(street, postalCode)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    // Get members by city and state
+    public List<Member> getMembersByCityAndState(String city, String state) {
+        return addressRepository.findByCityAndState(city, state)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    // Get members by city and postal code
+    public List<Member> getMembersByCityAndPostalCode(String city, String postalCode) {
+        return addressRepository.findByCityAndPostalCode(city, postalCode)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    // Get members by state and postal code
+    public List<Member> getMembersByStateAndPostalCode(String state, String postalCode) {
+        return addressRepository.findByStateAndPostalCode(state, postalCode)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    // Get members by street, city, and state
+    public List<Member> getMembersByStreetAndCityAndState(String street, String city, String state) {
+        return addressRepository.findByStreetAndCityAndState(street, city, state)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    // Get members by street, city, and postal code
+    public List<Member> getMembersByStreetAndCityAndPostalCode(String street, String city, String postalCode) {
+        return addressRepository.findByStreetAndCityAndPostalCode(street, city, postalCode)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+
+    // Get members by street, state, and postal code
+    public List<Member> getMembersByStreetAndStateAndPostalCode(String street, String state, String postalCode) {
+        return addressRepository.findByStreetAndStateAndPostalCode(street, state, postalCode)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    // Get members by city, state, and postal code
+    public List<Member> getMembersByCityAndStateAndPostalCode(String city, String state, String postalCode) {
+        return addressRepository.findByCityAndStateAndPostalCode(city, state, postalCode)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    // Get members by street, city, state, and postal code
+    public List<Member> getMembersByStreetAndCityAndStateAndPostalCode(String street, String city, String state, String postalCode) {
+        return addressRepository.findByStreetAndCityAndStateAndPostalCode(street, city, state, postalCode)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
 
     public ResponseEntity<Object> addMember(Member member, Address address) {
         HashMap<String, Object> message = new HashMap<>();
