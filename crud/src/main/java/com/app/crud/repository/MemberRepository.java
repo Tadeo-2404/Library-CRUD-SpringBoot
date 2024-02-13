@@ -11,4 +11,10 @@ public interface MemberRepository extends JpaRepository<Member, String> {
     List<Member> getByName(String name);
     List<Member> getByLastname(String lastname);
     List<Member> getByAge(int age);
+
+    List<Member> getByNameAndLastname(String name, String lastname);
+    List<Member> getByNameAndAge(String name, int age);
+    List<Member> getByLastnameAndAge(String lastname, int age);
+    List<Member> getByNameAndLastnameAndAge(String name, String lastname, int age);
+
 }
