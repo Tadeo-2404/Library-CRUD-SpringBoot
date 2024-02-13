@@ -46,9 +46,46 @@ public class MemberService {
     public List<Member> getMemberByAge(int age) {
         return memberRepository.getByAge(age);
     }
-
+    //get member by name and lastname
+    public List<Member> getMemberByNameAndLastname(String name, String lastname) {
+        return memberRepository.getByNameAndLastname(name, lastname);
+    }
+    //get member by name and age
+    public List<Member> getMemberByNameAndAge(String name, int age) {
+        return memberRepository.getByNameAndAge(name, age);
+    }
+    //get member by lastname and age
+    public List<Member> getMemberByLastnameAndAge(String lastname, int age) {
+        return memberRepository.getByLastnameAndAge(lastname, age);
+    }
+    //get member by lastname and lastname and age
+    public List<Member> getMemberByNameAndLastnameAndAge(String name, String lastname, int age) {
+        return memberRepository.getByNameAndLastnameAndAge(name, lastname, age);
+    }
+    //get member by city
     public List<Member> getMembersByCity(String city) {
         return addressRepository.findByCity(city)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    //get member by street
+    public List<Member> getMembersByStreet(String street) {
+        return addressRepository.findByStreet(street)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    //get member by state
+    public List<Member> getMembersByState(String state) {
+        return addressRepository.findByState(state)
+                .stream()
+                .map(address -> address.getMember())
+                .collect(Collectors.toList());
+    }
+    //get member by postalCode
+    public List<Member> getMembersByPostalCode(String postalCode) {
+        return addressRepository.findByPostalCode(postalCode)
                 .stream()
                 .map(address -> address.getMember())
                 .collect(Collectors.toList());
