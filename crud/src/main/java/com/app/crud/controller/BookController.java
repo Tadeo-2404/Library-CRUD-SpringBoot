@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping(path = "api/v1/books")
@@ -19,10 +20,43 @@ public class BookController {
     }
 
     @GetMapping
-    public List<Book> getBooks(@RequestParam(required = false) String title, @RequestParam(required = false) String author,
-                               @RequestParam(required = false) String genre,
-                               @RequestParam(required = false) String ISBN,
-                               @RequestParam(required = false) Integer amount) {
+    public List<Book> getBooks(@RequestParam Map<String,String> allParams) {
+        String ISBN = allParams.get("ISBN");
+        String title = allParams.get("title");
+        String author = allParams.get("author");
+        String genre = allParams.get("genre");
+        String amountStr = allParams.get("amount");
+        Integer amount = null;
+        if(amountStr != null) {
+            amount = Integer.parseInt(amountStr);
+        }
+
+        if(allParams.size() > 1) {
+            if(title != null && author != null) {
+                return bookService.getBooksByTitleAndAuthor(title, author);
+            } else if(title != null && genre != null) {
+                return bookService.getBooksByTitleAndGenre(title, genre);
+            } else if(title != null && amount != null) {
+                return bookService.getBooksByTitleAndAmount(title, amount);
+            } else if(title != null && author != null && genre != null) {
+                return bookService.getBooksByTitleAndAuthorAndGenre(title, author, genre);
+            } else if(author != null && genre != null) {
+                return bookService.getBooksByAuthorAndGenre(author, genre);
+            } else if(author != null && amount != null) {
+                return bookService.getBooksByAuthorAndAmount(author, amount);
+            } else if(genre != null && amount != null) {
+                return bookService.getBooksByGenreAndAmount(genre, amount);
+            } else if(title != null && author != null && amount != null) {
+                return bookService.getBooksByTitleAndAuthorAndAmount(title, author, amount);
+            } else if(title != null && genre != null && amount != null) {
+                return bookService.getBooksByTitleAndGenreAndAmount(title, genre, amount);
+            } else if(author != null && genre != null && amount != null) {
+                return bookService.getBooksByAuthorAndGenreAndAmount(author, genre, amount);
+            } else if(title != null && author != null && genre != null && amount != null) {
+                return bookService.getBooksByTitleAndAuthorAndGenreAndAmount(title, author, genre, amount);
+            }
+        }
+
         if (title != null) {
             return bookService.getBooksByTitle(title);
         } else if (author != null) {
@@ -33,7 +67,7 @@ public class BookController {
             return bookService.getBooksByAmount(amount);
         } else if (ISBN != null) {
             return bookService.getBooksByISBN(ISBN);
-        }else {
+        } else {
             return bookService.getBooks();
         }
     }
