@@ -175,20 +175,74 @@ public class MemberService {
             // Save the member
             Member memberSaved = this.memberRepository.save(member);
 
-            //add member to address
-            address.setMember(memberSaved);
-
             // Save the address
             Address addressSaved = this.addressRepository.save(address);
 
             // Update the member with the address
             memberSaved.setAddress(addressSaved);
 
+            //add member to address
+            address.setMember(memberSaved);
+
             //save the member changes
             memberRepository.save(memberSaved);
 
+            //save the member changes
+            addressRepository.save(addressSaved);
+
             message.put("message", "Member created successfully");
             return new ResponseEntity<>(message, HttpStatus.CREATED);
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+    }
+
+    public ResponseEntity<Object> editMember(Member member, Address address) {
+        HashMap<String, Object> message = new HashMap<>();
+        //valid if member already exist
+        if(member.getMemberId() == null) {
+            message.put("message", "Member must contain an ID");
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
+        //valid if member already exist
+        if(address.getAddress_id() == null) {
+            message.put("message", "Address must contain an ID");
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
+        Member memberExist = memberRepository.getById(member.getMemberId());
+        Address addressExist = addressRepository.getById(address.getAddress_id());
+
+        //valid if member exist
+        if(memberExist == null) {
+            message.put("message", "Member does not exist");
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
+        //valid if address exist
+        if(addressExist == null) {
+            message.put("message", "Address does not exist");
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
+        //valid if member and address have same ID
+        if(!member.getMemberId().equals(addressExist.getMember().getMemberId())) {
+            message.put("message", "The ID's does not match");
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            // Save the member
+            this.memberRepository.save(member);
+            // Set the member to address
+            address.setMember(member);
+            // Save the address
+            this.addressRepository.save(address);
+
+            message.put("message", "Member edited successfully");
+            return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
         } catch (Exception e) {
             message.put("message", e.getMessage());
             return new ResponseEntity<>(message, HttpStatus.CONFLICT);

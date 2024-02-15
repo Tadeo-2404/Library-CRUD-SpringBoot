@@ -77,3 +77,50 @@ INSERT INTO book (ISBN, title, author, genre, amount) VALUES
 (UUID(), 'Mistborn: Shadows of Self', 'Brandon Sanderson', 'Fantasy', 810),
 (UUID(), 'Mistborn: The Bands of Mourning', 'Brandon Sanderson', 'Fantasy', 820);
 
+-- Inserting data into the Member table
+INSERT INTO Member (member_id, name, lastname, age)
+VALUES
+    (UUID(), 'John', 'Doe', 32),
+    (UUID(), 'Alice', 'Smith', 28),
+    (UUID(), 'Michael', 'Johnson', 35),
+    (UUID(), 'Emily', 'Brown', 40),
+    (UUID(), 'David', 'Martinez', 26),
+    (UUID(), 'Sarah', 'Wilson', 33),
+    (UUID(), 'Matthew', 'Anderson', 45),
+    (UUID(), 'Emma', 'Taylor', 29),
+    (UUID(), 'Daniel', 'Thomas', 38),
+    (UUID(), 'Olivia', 'Hernandez', 31),
+    (UUID(), 'James', 'Young', 27),
+    (UUID(), 'Sophia', 'Garcia', 42),
+    (UUID(), 'William', 'Lee', 34),
+    (UUID(), 'Ava', 'Jones', 30),
+    (UUID(), 'Benjamin', 'White', 37),
+    (UUID(), 'Mia', 'Clark', 39),
+    (UUID(), 'Alexander', 'Allen', 36),
+    (UUID(), 'Ella', 'Lewis', 41),
+    (UUID(), 'Jackson', 'King', 25),
+    (UUID(), 'Victoria', 'Scott', 43);
+
+-- Inserting data into the Address table
+INSERT INTO Address (address_id, street, city, state, postal_code, member_id)
+VALUES
+    (UUID(), '123 Main St', 'Anytown', 'Anystate', '12345', (SELECT member_id FROM Member WHERE name = 'John' AND lastname = 'Doe')),
+    (UUID(), '456 Elm St', 'Otherville', 'Otherstate', '67890', (SELECT member_id FROM Member WHERE name = 'Alice' AND lastname = 'Smith')),
+    (UUID(), '789 Oak St', 'Anothercity', 'Anotherstate', '13579', (SELECT member_id FROM Member WHERE name = 'Michael' AND lastname = 'Johnson')),
+    (UUID(), '321 Pine St', 'Somewhere', 'Somestate', '24680', (SELECT member_id FROM Member WHERE name = 'Emily' AND lastname = 'Brown')),
+    (UUID(), '654 Cedar St', 'Nowhere', 'Nowherestate', '98765', (SELECT member_id FROM Member WHERE name = 'David' AND lastname = 'Martinez')),
+    (UUID(), '987 Maple St', 'Anywhere', 'Anystate', '54321', (SELECT member_id FROM Member WHERE name = 'Sarah' AND lastname = 'Wilson')),
+    (UUID(), '135 Birch St', 'Someplace', 'Somecitystate', '08642', (SELECT member_id FROM Member WHERE name = 'Matthew' AND lastname = 'Anderson')),
+    (UUID(), '246 Walnut St', 'Anotherplace', 'Anothercitystate', '95173', (SELECT member_id FROM Member WHERE name = 'Emma' AND lastname = 'Taylor')),
+    (UUID(), '579 Cherry St', 'Anyplace', 'Anystate', '30487', (SELECT member_id FROM Member WHERE name = 'Daniel' AND lastname = 'Thomas')),
+    (UUID(), '802 Laurel St', 'Here', 'Herestate', '71938', (SELECT member_id FROM Member WHERE name = 'Olivia' AND lastname = 'Hernandez')),
+    (UUID(), '097 Rose St', 'There', 'Theirstate', '26481', (SELECT member_id FROM Member WHERE name = 'James' AND lastname = 'Young')),
+    (UUID(), '384 Lily St', 'Nowhere', 'Anystate', '63592', (SELECT member_id FROM Member WHERE name = 'Sophia' AND lastname = 'Garcia')),
+    (UUID(), '675 Dahlia St', 'Anytown', 'Anystate', '81726', (SELECT member_id FROM Member WHERE name = 'William' AND lastname = 'Lee')),
+    (UUID(), '908 Iris St', 'Nowhere', 'Herestate', '53916', (SELECT member_id FROM Member WHERE name = 'Ava' AND lastname = 'Jones')),
+    (UUID(), '241 Sunflower St', 'Someplace', 'Somecitystate', '67248', (SELECT member_id FROM Member WHERE name = 'Benjamin' AND lastname = 'White')),
+    (UUID(), '753 Daisy St', 'Somewhere', 'Somestate', '18375', (SELECT member_id FROM Member WHERE name = 'Mia' AND lastname = 'Clark')),
+    (UUID(), '162 Orchid St', 'Here', 'Herestate', '49538', (SELECT member_id FROM Member WHERE name = 'Alexander' AND lastname = 'Allen')),
+    (UUID(), '425 Tulip St', 'Nowhere', 'Anystate', '72983', (SELECT member_id FROM Member WHERE name = 'Ella' AND lastname = 'Lewis')),
+    (UUID(), '940 Daffodil St', 'There', 'Theirstate', '14759', (SELECT member_id FROM Member WHERE name = 'Jackson' AND lastname = 'King')),
+    (UUID(), '376 Peony St', 'Anywhere', 'Anystate', '83649', (SELECT member_id FROM Member WHERE name = 'Victoria' AND lastname = 'Scott'));
