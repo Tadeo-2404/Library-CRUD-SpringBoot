@@ -8,6 +8,8 @@ import java.util.List;
 
 @Repository
 public interface MemberRepository extends JpaRepository<Member, String> {
+    @Override
+    Member getById(String ID);
     List<Member> getByName(String name);
     List<Member> getByLastname(String lastname);
     List<Member> getByAge(int age);

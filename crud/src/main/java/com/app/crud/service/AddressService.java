@@ -27,6 +27,10 @@ public class AddressService {
         return addressRepository.findAll();
     }
 
+    public Address getByID(String ID) {
+        return addressRepository.getById(ID);
+    }
+
     public List<Address> getAddressesByStreet(String street) {
         return addressRepository.findByStreet(street);
     }

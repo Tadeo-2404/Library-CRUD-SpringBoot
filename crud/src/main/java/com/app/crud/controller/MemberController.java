@@ -100,11 +100,20 @@ public class MemberController {
     public static class MemberRegistrationRequest {
         private Member member;
         private Address address;
-
         public Member getMember() {
             return member;
         }
+        public Address getAddress() {
+            return address;
+        }
+    }
 
+    public static class MemberEditionRequest {
+        private Member member;
+        private Address address;
+        public Member getMember() {
+            return member;
+        }
         public Address getAddress() {
             return address;
         }
@@ -115,5 +124,17 @@ public class MemberController {
         Member member = request.getMember();
         Address address = request.getAddress();
         return this.memberService.addMember(member, address);
+    }
+
+    @PutMapping
+    public ResponseEntity<Object> editMember(@RequestBody MemberEditionRequest request) {
+        Member member = request.getMember();
+        Address address = request.getAddress();
+        return this.memberService.editMember(member, address);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Object> deleteMember(@RequestParam String memberId) {
+        return this.memberService.deleteMember(memberId);
     }
 }

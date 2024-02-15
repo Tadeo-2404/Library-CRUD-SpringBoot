@@ -43,6 +43,52 @@ public class BookService {
         return bookRepository.findByAmount(amount);
     }
 
+    public List<Book> getBooksByTitleAndAuthor(String title, String author) {
+        return bookRepository.findByTitleAndAuthor(title, author);
+    }
+
+    public List<Book> getBooksByTitleAndGenre(String title, String genre) {
+        return bookRepository.findByTitleAndGenre(title, genre);
+    }
+
+    public List<Book> getBooksByTitleAndAmount(String title, int amount) {
+        return bookRepository.findByTitleAndAmount(title, amount);
+    }
+
+    public List<Book> getBooksByAuthorAndGenre(String author, String genre) {
+        return bookRepository.findByAuthorAndGenre(author, genre);
+    }
+
+    public List<Book> getBooksByAuthorAndAmount(String author, int amount) {
+        return bookRepository.findByAuthorAndAmount(author, amount);
+    }
+
+    public List<Book> getBooksByGenreAndAmount(String genre, int amount) {
+        return bookRepository.findByGenreAndAmount(genre, amount);
+    }
+
+    // Three Parameters
+    public List<Book> getBooksByTitleAndAuthorAndGenre(String title, String author, String genre) {
+        return bookRepository.findByTitleAndAuthorAndGenre(title, author, genre);
+    }
+
+    public List<Book> getBooksByTitleAndAuthorAndAmount(String title, String author, int amount) {
+        return bookRepository.findByTitleAndAuthorAndAmount(title, author, amount);
+    }
+
+    public List<Book> getBooksByTitleAndGenreAndAmount(String title, String genre, int amount) {
+        return bookRepository.findByTitleAndGenreAndAmount(title, genre, amount);
+    }
+
+    public List<Book> getBooksByAuthorAndGenreAndAmount(String author, String genre, int amount) {
+        return bookRepository.findByAuthorAndGenreAndAmount(author, genre, amount);
+    }
+
+    // Four Parameters
+    public List<Book> getBooksByTitleAndAuthorAndGenreAndAmount(String title, String author, String genre, int amount) {
+        return bookRepository.findByTitleAndAuthorAndGenreAndAmount(title, author, genre, amount);
+    }
+
     public ResponseEntity<Object> newProduct(Book book) {
         HashMap<String, Object> message = new HashMap<>();
         try {
