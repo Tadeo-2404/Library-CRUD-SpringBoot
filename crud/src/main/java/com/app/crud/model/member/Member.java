@@ -28,7 +28,7 @@ public class Member {
     @Column(name = "age", unique = false, nullable = true)
     private int age;
 
-    @OneToOne(mappedBy = "member")
+    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
     @JsonIgnore
     private Address address;
 

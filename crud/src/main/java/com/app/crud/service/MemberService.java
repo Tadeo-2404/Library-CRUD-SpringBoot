@@ -248,4 +248,34 @@ public class MemberService {
             return new ResponseEntity<>(message, HttpStatus.CONFLICT);
         }
     }
+
+    public ResponseEntity<Object> deleteMember(String memberId) {
+        System.out.println("memberId" + memberId);
+        HashMap<String, Object> message = new HashMap<>();
+        //valid if ID was passed
+        if(memberId == null) {
+            message.put("message", "ID is mandatory");
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
+        //search for member
+        Member memberExist = memberRepository.getById(memberId);
+
+        //valid if member exist
+        if(memberExist == null) {
+            message.put("message", "Member does not exist");
+            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            // Delete the member
+            this.memberRepository.delete(memberExist);
+
+            message.put("message", "Member deleted successfully");
+            return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
+        } catch (Exception e) {
+            message.put("message", e.getMessage());
+            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+        }
+    }
 }

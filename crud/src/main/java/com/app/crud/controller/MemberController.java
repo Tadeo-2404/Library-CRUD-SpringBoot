@@ -132,4 +132,9 @@ public class MemberController {
         Address address = request.getAddress();
         return this.memberService.editMember(member, address);
     }
+
+    @DeleteMapping
+    public ResponseEntity<Object> deleteMember(@RequestParam String memberId) {
+        return this.memberService.deleteMember(memberId);
+    }
 }
