@@ -1,12 +1,17 @@
 package com.app.crud.controller;
 
 import com.app.crud.model.loan.Loan;
+import com.app.crud.model.member.Member;
 import com.app.crud.service.BookService;
 import com.app.crud.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -20,12 +25,41 @@ public class LoanController {
     }
 
     @GetMapping
-    public List<Loan> getLoans() {
-        return this.loanService.getLoans();
+    public List<Loan> getLoans(@RequestParam(required = false) String Id,
+                               @RequestParam(required = false) String memberId,
+                               @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateBorrow,
+                               @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateLimit) {
+        if (Id != null) {
+            Loan loan = loanService.getById(Id);
+            return Collections.singletonList(loan);
+        } else if (memberId != null) {
+            // If memberId is provided, return Loans associated with that memberId
+            return loanService.getByMemberId(memberId);
+        } else if (dateBorrow != null) {
+            return loanService.getByDateBorrow(dateBorrow);
+        } else if (dateLimit != null) {
+            return loanService.getByDateLimit(dateLimit);
+        } else if (dateBorrow != null && dateLimit != null) {
+            // If both dateBorrow and dateLimit are provided, return Loans within that date range
+            return loanService.getByDateBorrowAndDateLimit(dateBorrow, dateLimit);
+        } else if (memberId != null && dateLimit != null) {
+            return loanService.getByMemberIdAndDateLimit(memberId, dateLimit);
+        } else if (memberId != null && dateBorrow != null && dateLimit != null) {
+            return loanService.getByMemberIdAndDateBorrowAndDateLimit(memberId, dateBorrow, dateLimit);
+        } else {
+            // If no specific parameters are provided, return all Loans
+            return loanService.getLoans();
+        }
     }
+
 
     @PostMapping
     public ResponseEntity<Object> createLoan(@RequestBody Loan loan) {
         return loanService.createLoan(loan);
+    }
+
+    @PutMapping
+    public ResponseEntity<Object> editLoan(@RequestBody Loan loan) {
+        return loanService.editLoan(loan);
     }
 }
