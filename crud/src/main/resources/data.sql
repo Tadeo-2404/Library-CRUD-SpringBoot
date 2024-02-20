@@ -124,3 +124,12 @@ VALUES
     (UUID(), '425 Tulip St', 'Nowhere', 'Anystate', '72983', (SELECT member_id FROM Member WHERE name = 'Ella' AND lastname = 'Lewis')),
     (UUID(), '940 Daffodil St', 'There', 'Theirstate', '14759', (SELECT member_id FROM Member WHERE name = 'Jackson' AND lastname = 'King')),
     (UUID(), '376 Peony St', 'Anywhere', 'Anystate', '83649', (SELECT member_id FROM Member WHERE name = 'Victoria' AND lastname = 'Scott'));
+
+-- Inserting data into the Loan table
+INSERT INTO Loan (ID, date_borrow, date_limit, member_id)
+VALUES
+(UUID(), '2024-02-21T10:00:00', '2024-02-26T10:00:00', (SELECT member_id FROM Member WHERE name = 'Victoria' AND lastname = 'Scott')),
+(UUID(), '2024-02-22T11:45:00', '2024-02-27T11:45:00', (SELECT member_id FROM Member WHERE name = 'Benjamin' AND lastname = 'White')),
+(UUID(), '2024-02-23T14:20:00', '2024-02-28T14:20:00', (SELECT member_id FROM Member WHERE name = 'Sophia' AND lastname = 'Garcia')),
+(UUID(), '2024-02-24T16:30:00', '2024-02-29T16:30:00', (SELECT member_id FROM Member WHERE name = 'Matthew' AND lastname = 'Anderson')),
+(UUID(), '2024-02-25T09:15:00', '2024-03-01T09:15:00', (SELECT member_id FROM Member WHERE name = 'Olivia' AND lastname = 'Hernandez'));
