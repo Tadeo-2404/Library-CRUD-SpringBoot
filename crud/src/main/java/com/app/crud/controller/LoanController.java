@@ -1,8 +1,6 @@
 package com.app.crud.controller;
 
 import com.app.crud.model.loan.Loan;
-import com.app.crud.model.member.Member;
-import com.app.crud.service.BookService;
 import com.app.crud.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;

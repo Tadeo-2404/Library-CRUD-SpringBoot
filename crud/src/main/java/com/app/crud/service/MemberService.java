@@ -2,21 +2,8 @@ package com.app.crud.service;
 
 import com.app.crud.dto.AddressDTO;
 import com.app.crud.dto.MemberDTO;
-import com.app.crud.dto.mapper.AddressDTOMapper;
-import com.app.crud.dto.mapper.MemberDTOMapper;
-import com.app.crud.model.address.Address;
-import com.app.crud.repository.AddressRepository;
-import com.app.crud.model.member.Member;
-import com.app.crud.repository.MemberRepository;
-import jakarta.persistence.EntityNotFoundException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Service;
-
-import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public interface MemberService {
 
