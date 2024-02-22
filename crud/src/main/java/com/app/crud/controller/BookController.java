@@ -1,6 +1,6 @@
 package com.app.crud.controller;
 
-import com.app.crud.model.book.Book;
+import com.app.crud.dto.BookDTO;
 import com.app.crud.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class BookController {
     }
 
     @GetMapping
-    public List<Book> getBooks(@RequestParam Map<String,String> allParams) {
+    public List<BookDTO> getBooks(@RequestParam Map<String,String> allParams) {
         String ISBN = allParams.get("ISBN");
         String title = allParams.get("title");
         String author = allParams.get("author");
@@ -73,12 +73,12 @@ public class BookController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> registerBook(@RequestBody Book book) {
+    public ResponseEntity<Object> registerBook(@RequestBody BookDTO book) {
         return this.bookService.newProduct(book);
     }
 
     @PutMapping
-    public ResponseEntity<Object> editBook(@RequestBody Book book) {
+    public ResponseEntity<Object> editBook(@RequestBody BookDTO book) {
         return this.bookService.newProduct(book);
     }
 

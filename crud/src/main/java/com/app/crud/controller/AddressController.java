@@ -1,9 +1,7 @@
 package com.app.crud.controller;
 
 import com.app.crud.model.address.Address;
-import com.app.crud.model.book.Book;
 import com.app.crud.service.AddressService;
-import com.app.crud.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
