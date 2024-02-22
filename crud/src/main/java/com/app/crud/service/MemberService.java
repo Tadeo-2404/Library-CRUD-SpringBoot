@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,17 +23,14 @@ public class MemberService {
     private MemberRepository memberRepository;
     private AddressRepository addressRepository;
     private MemberDTOMapper memberDTOMapper;
-    private AddressDTOMapper addressDTOMapper;
 
     @Autowired
     public MemberService(MemberRepository memberRepository,
                          AddressRepository addressRepository,
-                         MemberDTOMapper memberDTOMapper,
-                         AddressDTOMapper addressDTOMapper) {
+                         MemberDTOMapper memberDTOMapper) {
         this.memberRepository = memberRepository;
         this.addressRepository = addressRepository;
         this.memberDTOMapper = memberDTOMapper;
-        this.addressDTOMapper = addressDTOMapper;
     }
 
     //get all members
