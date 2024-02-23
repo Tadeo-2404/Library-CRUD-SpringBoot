@@ -23,9 +23,9 @@ public class MemberBook {
 
     @OneToOne
     @JoinColumn(
-            name = "loan_id"
+            name = "loan_ID",
+            referencedColumnName = "ID"
     )
     private Loan loan;
-
     private int amountBorrowed;
 }
