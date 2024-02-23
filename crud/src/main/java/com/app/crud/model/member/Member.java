@@ -1,9 +1,4 @@
 package com.app.crud.model.member;
-
-import com.app.crud.model.address.Address;
-import com.app.crud.model.book.Book;
-import com.app.crud.model.memberBook.MemberBook;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,9 +22,4 @@ public class Member {
     private String lastname;
     @Column(name = "age", unique = false, nullable = true)
     private int age;
-
-    @OneToOne(mappedBy = "member", cascade = CascadeType.ALL)
-    @JsonIgnore
-    private Address address;
-
 }

@@ -222,8 +222,7 @@ public class MemberServiceImpl implements MemberService {
                     memberDTO.getMemberId(),
                     memberDTO.getName(),
                     memberDTO.getLastname(),
-                    memberDTO.getAge(),
-                    null // Address will be set later
+                    memberDTO.getAge()
             );
             Address address = new Address(
                     member, // Member should be passed as the first parameter
@@ -241,9 +240,6 @@ public class MemberServiceImpl implements MemberService {
 
             // Save the address
             Address addressSaved = this.addressRepository.save(address);
-
-            // Update the member with the address
-            memberSaved.setAddress(addressSaved);
 
             // Save the updated member
             this.memberRepository.save(memberSaved);

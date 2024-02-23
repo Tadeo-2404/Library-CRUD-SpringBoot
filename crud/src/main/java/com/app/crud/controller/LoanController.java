@@ -1,5 +1,6 @@
 package com.app.crud.controller;
 
+import com.app.crud.dto.LoanDTO;
 import com.app.crud.model.loan.Loan;
 import com.app.crud.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @RestController
@@ -23,14 +22,10 @@ public class LoanController {
     }
 
     @GetMapping
-    public List<Loan> getLoans(@RequestParam(required = false) String Id,
-                               @RequestParam(required = false) String memberId,
-                               @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateBorrow,
-                               @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateLimit) {
-        if (Id != null) {
-            Loan loan = loanService.getById(Id);
-            return Collections.singletonList(loan);
-        } else if (memberId != null) {
+    public List<LoanDTO> getLoans(@RequestParam(required = false) String memberId,
+                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateBorrow,
+                                  @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime dateLimit) {
+        if (memberId != null) {
             // If memberId is provided, return Loans associated with that memberId
             return loanService.getByMemberId(memberId);
         } else if (dateBorrow != null) {
