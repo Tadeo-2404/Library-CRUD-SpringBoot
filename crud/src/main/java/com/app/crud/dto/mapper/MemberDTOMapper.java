@@ -12,21 +12,11 @@ import java.util.function.Function;
 public class MemberDTOMapper implements Function<Member, MemberDTO> {
     @Override
     public MemberDTO apply(Member member) {
-        Address address = member.getAddress();
-        AddressDTO addressDTO = new AddressDTO(
-                address.getAddress_id(),
-                address.getStreet(),
-                address.getCity(),
-                address.getState(),
-                address.getPostalCode()
-        );
-
         return new MemberDTO(
                 member.getMemberId(),
                 member.getName(),
                 member.getLastname(),
-                member.getAge(),
-                addressDTO
+                member.getAge()
         );
     }
 }

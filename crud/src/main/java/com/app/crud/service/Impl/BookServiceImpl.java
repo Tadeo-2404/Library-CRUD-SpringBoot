@@ -28,84 +28,84 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> getBooks() {
         return this.bookRepository.findAll()
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByISBN(String ISBN) {
         return bookRepository.findByISBN(ISBN)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByTitle(String title) {
         return bookRepository.findByTitle(title)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByAuthor(String author) {
         return bookRepository.findByAuthor(author)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByGenre(String genre) {
         return bookRepository.findByGenre(genre)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByAmount(int amount) {
         return bookRepository.findByAmount(amount)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByTitleAndAuthor(String title, String author) {
         return bookRepository.findByTitleAndAuthor(title, author)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByTitleAndGenre(String title, String genre) {
         return bookRepository.findByTitleAndGenre(title, genre)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByTitleAndAmount(String title, int amount) {
         return bookRepository.findByTitleAndAmount(title, amount)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByAuthorAndGenre(String author, String genre) {
         return bookRepository.findByAuthorAndGenre(author, genre)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByAuthorAndAmount(String author, int amount) {
         return bookRepository.findByAuthorAndAmount(author, amount)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByGenreAndAmount(String genre, int amount) {
         return bookRepository.findByGenreAndAmount(genre, amount)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
@@ -113,28 +113,28 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> getBooksByTitleAndAuthorAndGenre(String title, String author, String genre) {
         return bookRepository.findByTitleAndAuthorAndGenre(title, author, genre)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByTitleAndAuthorAndAmount(String title, String author, int amount) {
         return bookRepository.findByTitleAndAuthorAndAmount(title, author, amount)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByTitleAndGenreAndAmount(String title, String genre, int amount) {
         return bookRepository.findByTitleAndGenreAndAmount(title, genre, amount)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
     public List<BookDTO> getBooksByAuthorAndGenreAndAmount(String author, String genre, int amount) {
         return bookRepository.findByAuthorAndGenreAndAmount(author, genre, amount)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 
@@ -142,7 +142,7 @@ public class BookServiceImpl implements BookService {
     public List<BookDTO> getBooksByTitleAndAuthorAndGenreAndAmount(String title, String author, String genre, int amount) {
         return bookRepository.findByTitleAndAuthorAndGenreAndAmount(title, author, genre, amount)
                 .stream()
-                .map(bookDTOMapper)
+                .map(bookDTOMapper::mapToBookDTO)
                 .collect(Collectors.toList());
     }
 

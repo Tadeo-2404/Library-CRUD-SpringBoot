@@ -1,5 +1,7 @@
 package com.app.crud.service.Impl;
 
+import com.app.crud.dto.LoanDTO;
+import com.app.crud.dto.mapper.LoanDTOMapper;
 import com.app.crud.model.loan.Loan;
 import com.app.crud.model.member.Member;
 import com.app.crud.repository.LoanRepository;
@@ -13,52 +15,86 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class LoanServiceImpl implements LoanService {
     private final LoanRepository loanRepository;
     private final MemberRepository memberRepository;
+    private final LoanDTOMapper loanDTOMapper;
 
     @Autowired
-    public LoanServiceImpl(LoanRepository loanRepository, MemberRepository memberRepository) {
+    public LoanServiceImpl(LoanRepository loanRepository, MemberRepository memberRepository, LoanDTOMapper loanDTOMapper) {
         this.loanRepository = loanRepository;
         this.memberRepository = memberRepository;
+        this.loanDTOMapper = loanDTOMapper;
     }
 
-    public Loan getById(String Id) {
-        return this.loanRepository.getById(Id);
+    public LoanDTO getById(String Id) {
+        Loan loan = this.loanRepository.getById(Id);
+        if (loan != null) {
+            return loanDTOMapper.mapToLoanDTO(loan);
+        } else {
+            return null; // or throw an exception indicating the loan was not found
+        }
     }
 
-    public List<Loan> getLoans() {
-        return this.loanRepository.findAll();
+
+
+    public List<LoanDTO> getLoans() {
+        return this.loanRepository.findAll()
+                .stream()
+                .map(loanDTOMapper::mapToLoanDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Loan> getByDateBorrow(LocalDateTime dateBorrow) {
-        return this.loanRepository.getByDateBorrow(dateBorrow);
+    public List<LoanDTO> getByDateBorrow(LocalDateTime dateBorrow) {
+        return this.loanRepository.getByDateBorrow(dateBorrow)
+                .stream()
+                .map(loanDTOMapper::mapToLoanDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Loan> getByDateLimit(LocalDateTime dateLimit) {
-        return this.loanRepository.getByDateLimit(dateLimit);
+    public List<LoanDTO> getByDateLimit(LocalDateTime dateLimit) {
+        return this.loanRepository.getByDateLimit(dateLimit)
+                .stream()
+                .map(loanDTOMapper::mapToLoanDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Loan> getByMemberId(String memberId) {
-        return this.loanRepository.getByMember_MemberId(memberId);
+    public List<LoanDTO> getByMemberId(String memberId) {
+        return this.loanRepository.getByMember_MemberId(memberId)
+                .stream()
+                .map(loanDTOMapper::mapToLoanDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Loan> getByMemberIdAndDateBorrow(String memberId, LocalDateTime dateBorrow) {
-        return this.loanRepository.getByMember_MemberIdAndDateBorrow(memberId, dateBorrow);
+    public List<LoanDTO> getByMemberIdAndDateBorrow(String memberId, LocalDateTime dateBorrow) {
+        return this.loanRepository.getByMember_MemberIdAndDateBorrow(memberId, dateBorrow)
+                .stream()
+                .map(loanDTOMapper::mapToLoanDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Loan> getByMemberIdAndDateLimit(String memberId, LocalDateTime dateLimit) {
-        return this.loanRepository.getByMember_MemberIdAndDateLimit(memberId, dateLimit);
+    public List<LoanDTO> getByMemberIdAndDateLimit(String memberId, LocalDateTime dateLimit) {
+        return this.loanRepository.getByMember_MemberIdAndDateLimit(memberId, dateLimit)
+                .stream()
+                .map(loanDTOMapper::mapToLoanDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Loan> getByDateBorrowAndDateLimit(LocalDateTime dateBorrow, LocalDateTime dateLimit) {
-        return this.loanRepository.getByDateBorrowAndDateLimit(dateBorrow, dateLimit);
+    public List<LoanDTO> getByDateBorrowAndDateLimit(LocalDateTime dateBorrow, LocalDateTime dateLimit) {
+        return this.loanRepository.getByDateBorrowAndDateLimit(dateBorrow, dateLimit)
+                .stream()
+                .map(loanDTOMapper::mapToLoanDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Loan> getByMemberIdAndDateBorrowAndDateLimit(String memberId, LocalDateTime dateBorrow, LocalDateTime dateLimit) {
-        return this.loanRepository.getByMember_MemberIdAndDateBorrowAndDateLimit(memberId, dateBorrow, dateLimit);
+    public List<LoanDTO> getByMemberIdAndDateBorrowAndDateLimit(String memberId, LocalDateTime dateBorrow, LocalDateTime dateLimit) {
+        return this.loanRepository.getByMember_MemberIdAndDateBorrowAndDateLimit(memberId, dateBorrow, dateLimit)
+                .stream()
+                .map(loanDTOMapper::mapToLoanDTO)
+                .collect(Collectors.toList());
     }
 
     public ResponseEntity<Object> createLoan(Loan loan) {

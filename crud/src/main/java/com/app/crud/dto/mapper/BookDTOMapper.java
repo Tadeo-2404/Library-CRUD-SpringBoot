@@ -7,15 +7,24 @@ import org.springframework.stereotype.Service;
 import java.util.function.Function;
 
 @Service
-public class BookDTOMapper implements Function<Book, BookDTO> {
-    @Override
-    public BookDTO apply(Book book) {
+public class BookDTOMapper {
+    public BookDTO mapToBookDTO(Book book) {
         return new BookDTO(
                 book.getISBN(),
                 book.getTitle(),
                 book.getAuthor(),
                 book.getGenre(),
                 book.getAmount()
+        );
+    }
+
+    public Book mapToBook(BookDTO bookDTO) {
+        return new Book(
+                bookDTO.getISBN(),
+                bookDTO.getTitle(),
+                bookDTO.getAuthor(),
+                bookDTO.getGenre(),
+                bookDTO.getAmount()
         );
     }
 }
