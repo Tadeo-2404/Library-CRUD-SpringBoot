@@ -7,9 +7,9 @@ import java.util.List;
 
 public interface MemberBookService {
     public List<MemberBook> getMemberBooks();
-    public List<MemberBook> getByMember_id(String member_id);
-    public List<MemberBook> getByISBN(String ISBN);
+    public List<MemberBook> getByMember_MemberId(String memberId);
+    public List<MemberBook> getByBookISBN(String ISBN);
     public List<MemberBook> getByLoan_ID(String loan_ID);
-    public List<MemberBook> getByAmount(int amount);
+    public List<MemberBook> getByAmountBorrowed(int amount);
     public ResponseEntity<Object> createMemberBook(MemberBook memberBook);
 }
