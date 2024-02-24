@@ -25,6 +25,10 @@ public class MemberBookController {
 
     @PostMapping
     public ResponseEntity<Object> createMemberBook(@RequestBody MemberBook memberBook) {
+        System.out.println(memberBook.getBook().getISBN());
+        System.out.println(memberBook.getMember().getMemberId());
+        System.out.println(memberBook.getLoan().getID());
+        System.out.println(memberBook.getAmountBorrowed());
         return this.memberBookService.createMemberBook(memberBook);
     }
 }
