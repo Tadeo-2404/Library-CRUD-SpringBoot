@@ -60,57 +60,51 @@ public class MemberBookServiceImpl implements MemberBookService {
         return memberBookRepository.getByAmountBorrowed(amount);
     }
 
-    public ResponseEntity<Object> createMemberBook(MemberBook memberBook) {
-        HashMap<String, Object> message = new HashMap<>();
-
+    public ResponseEntity<String> createMemberBook(MemberBook memberBook) {
         try {
             //check if book exists
             Book book = bookRepository.getById(memberBook.getBook().getISBN());
-            if(book == null) {
-                message.put("error", "Book with ISBN" + memberBook.getBook().getISBN() + "does not exist");
+            if (book == null) {
                 return new ResponseEntity<>(
-                        message,
+                        "Book with ISBN " + memberBook.getBook().getISBN() + " does not exist",
                         HttpStatus.BAD_REQUEST
                 );
             }
             //check if loan exists
             Loan loan = loanRepository.getById(memberBook.getLoan().getID());
-            if(loan == null) {
-                message.put("error", "Loan with ID" + memberBook.getLoan().getID() + "does not exist");
+            if (loan == null) {
                 return new ResponseEntity<>(
-                        message,
+                        "Loan with ID " + memberBook.getLoan().getID() + " does not exist",
                         HttpStatus.BAD_REQUEST
                 );
             }
             //check if member exists
             Member member = memberRepository.getById(memberBook.getMember().getMemberId());
-            if(member == null) {
-                message.put("error", "Member with ID" + memberBook.getMember().getMemberId() + "does not exist");
+            if (member == null) {
                 return new ResponseEntity<>(
-                        message,
+                        "Member with ID " + memberBook.getMember().getMemberId() + " does not exist",
                         HttpStatus.BAD_REQUEST
                 );
             }
 
+            // Set related entities
+            memberBook.setBook(book);
+            memberBook.setMember(member);
+            memberBook.setLoan(loan);
+
             // Save the member book
-            MemberBook memberBookSaved = memberBookRepository.save(memberBook);
-            memberBookSaved.setBook(book);
-            memberBookSaved.setMember(member);
-            memberBookSaved.setLoan(loan);
-            memberBookRepository.save(memberBookSaved);
-            message.put("success", memberBook);
+            memberBookRepository.save(memberBook);
 
             return new ResponseEntity<>(
-                    message,
+                    "MemberBook object created successfully",
                     HttpStatus.CREATED
             );
         } catch (Exception e) {
-            message.put("error", true);
-            message.put("message", e.getMessage());
             return new ResponseEntity<>(
-                    message,
+                    e.getMessage(),
                     HttpStatus.CONFLICT
             );
         }
     }
+
 }
