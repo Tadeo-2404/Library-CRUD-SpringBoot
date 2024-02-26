@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface MemberBookRepository extends JpaRepository<MemberBook, String> {
+    MemberBook getById(String ID);
     List<MemberBook> getByMember_MemberId(String memberId);
     List<MemberBook> getByBookISBN(String ISBN);
     List<MemberBook> getByLoan_ID(String loan_ID);
