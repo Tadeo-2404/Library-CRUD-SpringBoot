@@ -14,41 +14,41 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public interface BookService {
-    public List<BookDTO> getBooks();
+    public ResponseEntity<Object> getBooks();
 
-    public List<BookDTO> getBooksByISBN(String ISBN);
+    public ResponseEntity<Object> getBooksByISBN(String ISBN);
 
-    public List<BookDTO> getBooksByTitle(String title);
+    public ResponseEntity<Object> getBooksByTitle(String title);
 
-    public List<BookDTO> getBooksByAuthor(String author);
+    public ResponseEntity<Object> getBooksByAuthor(String author);
 
-    public List<BookDTO> getBooksByGenre(String genre);
+    public ResponseEntity<Object> getBooksByGenre(String genre);
 
-    public List<BookDTO> getBooksByAmount(int amount);
+    public ResponseEntity<Object> getBooksByAmount(int amount);
 
-    public List<BookDTO> getBooksByTitleAndAuthor(String title, String author);
+    public ResponseEntity<Object> getBooksByTitleAndAuthor(String title, String author);
 
-    public List<BookDTO> getBooksByTitleAndGenre(String title, String genre);
+    public ResponseEntity<Object> getBooksByTitleAndGenre(String title, String genre);
 
-    public List<BookDTO> getBooksByTitleAndAmount(String title, int amount);
+    public ResponseEntity<Object> getBooksByTitleAndAmount(String title, int amount);
 
-    public List<BookDTO> getBooksByAuthorAndGenre(String author, String genre);
+    public ResponseEntity<Object> getBooksByAuthorAndGenre(String author, String genre);
 
-    public List<BookDTO> getBooksByAuthorAndAmount(String author, int amount);
+    public ResponseEntity<Object> getBooksByAuthorAndAmount(String author, int amount);
 
-    public List<BookDTO> getBooksByGenreAndAmount(String genre, int amount);
+    public ResponseEntity<Object> getBooksByGenreAndAmount(String genre, int amount);
 
     // Three Parameters
-    public List<BookDTO> getBooksByTitleAndAuthorAndGenre(String title, String author, String genre);
+    public ResponseEntity<Object> getBooksByTitleAndAuthorAndGenre(String title, String author, String genre);
 
-    public List<BookDTO> getBooksByTitleAndAuthorAndAmount(String title, String author, int amount);
+    public ResponseEntity<Object> getBooksByTitleAndAuthorAndAmount(String title, String author, int amount);
 
-    public List<BookDTO> getBooksByTitleAndGenreAndAmount(String title, String genre, int amount);
+    public ResponseEntity<Object> getBooksByTitleAndGenreAndAmount(String title, String genre, int amount);
 
-    public List<BookDTO> getBooksByAuthorAndGenreAndAmount(String author, String genre, int amount);
+    public ResponseEntity<Object> getBooksByAuthorAndGenreAndAmount(String author, String genre, int amount);
 
     // Four Parameters
-    public List<BookDTO> getBooksByTitleAndAuthorAndGenreAndAmount(String title, String author, String genre, int amount);
+    public ResponseEntity<Object> getBooksByTitleAndAuthorAndGenreAndAmount(String title, String author, String genre, int amount);
 
     public ResponseEntity<Object> newProduct(BookDTO book);
 

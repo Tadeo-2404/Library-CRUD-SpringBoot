@@ -6,11 +6,11 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface MemberBookService {
-    public MemberBook getById(String memberBook_id);
-    public List<MemberBook> getMemberBooks();
-    public List<MemberBook> getByMember_MemberId(String memberId);
-    public List<MemberBook> getByBookISBN(String ISBN);
-    public List<MemberBook> getByLoan_ID(String loan_ID);
-    public List<MemberBook> getByAmountBorrowed(int amount);
-    public ResponseEntity<String> createMemberBook(MemberBook memberBook);
+    public ResponseEntity<Object> getById(String memberBook_id);
+    public ResponseEntity<Object> getMemberBooks();
+    public ResponseEntity<Object> getByMember_MemberId(String memberId);
+    public ResponseEntity<Object> getByBookISBN(String ISBN);
+    public ResponseEntity<Object> getByLoan_ID(String loan_ID);
+    public ResponseEntity<Object> getByAmountBorrowed(int amount);
+    public ResponseEntity<Object> createMemberBook(MemberBook memberBook);
 }

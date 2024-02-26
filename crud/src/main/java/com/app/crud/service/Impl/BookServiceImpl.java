@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -25,136 +26,442 @@ public class BookServiceImpl implements BookService {
         this.bookDTOMapper = bookDTOMapper;
     }
 
-    public List<BookDTO> getBooks() {
-        return this.bookRepository.findAll()
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooks() {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+           List<BookDTO> list = this.bookRepository.findAll()
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByISBN(String ISBN) {
-        return bookRepository.findByISBN(ISBN)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByISBN(String ISBN) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            Book book = this.bookRepository.findByISBN(ISBN);
+            BookDTO bookDTO = bookDTOMapper.mapToBookDTO(book);
+
+            if(book != null) {
+                dataMap.put("status", 1);
+                dataMap.put("data", bookDTO);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "Not found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByTitle(String title) {
-        return bookRepository.findByTitle(title)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByTitle(String title) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByTitle(title)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByAuthor(String author) {
-        return bookRepository.findByAuthor(author)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByAuthor(String author) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByAuthor(author)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByGenre(String genre) {
-        return bookRepository.findByGenre(genre)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByGenre(String genre) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByGenre(genre)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByAmount(int amount) {
-        return bookRepository.findByAmount(amount)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByAmount(int amount) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByAmount(amount)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByTitleAndAuthor(String title, String author) {
-        return bookRepository.findByTitleAndAuthor(title, author)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByTitleAndAuthor(String title, String author) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByTitleAndAuthor(title, author)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByTitleAndGenre(String title, String genre) {
-        return bookRepository.findByTitleAndGenre(title, genre)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByTitleAndGenre(String title, String genre) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByTitleAndGenre(title, genre)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByTitleAndAmount(String title, int amount) {
-        return bookRepository.findByTitleAndAmount(title, amount)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByTitleAndAmount(String title, int amount) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByTitleAndAmount(title, amount)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByAuthorAndGenre(String author, String genre) {
-        return bookRepository.findByAuthorAndGenre(author, genre)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByAuthorAndGenre(String author, String genre) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByAuthorAndGenre(author, genre)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByAuthorAndAmount(String author, int amount) {
-        return bookRepository.findByAuthorAndAmount(author, amount)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByAuthorAndAmount(String author, int amount) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByAuthorAndAmount(author, amount)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByGenreAndAmount(String genre, int amount) {
-        return bookRepository.findByGenreAndAmount(genre, amount)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByGenreAndAmount(String genre, int amount) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByGenreAndAmount(genre, amount)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Three Parameters
-    public List<BookDTO> getBooksByTitleAndAuthorAndGenre(String title, String author, String genre) {
-        return bookRepository.findByTitleAndAuthorAndGenre(title, author, genre)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByTitleAndAuthorAndGenre(String title, String author, String genre) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByTitleAndAuthorAndGenre(title, author, genre)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByTitleAndAuthorAndAmount(String title, String author, int amount) {
-        return bookRepository.findByTitleAndAuthorAndAmount(title, author, amount)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByTitleAndAuthorAndAmount(String title, String author, int amount) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByTitleAndAuthorAndAmount(title, author, amount)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByTitleAndGenreAndAmount(String title, String genre, int amount) {
-        return bookRepository.findByTitleAndGenreAndAmount(title, genre, amount)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByTitleAndGenreAndAmount(String title, String genre, int amount) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByTitleAndGenreAndAmount(title, genre, amount)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-    public List<BookDTO> getBooksByAuthorAndGenreAndAmount(String author, String genre, int amount) {
-        return bookRepository.findByAuthorAndGenreAndAmount(author, genre, amount)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByAuthorAndGenreAndAmount(String author, String genre, int amount) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByAuthorAndGenreAndAmount(author, genre, amount)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Four Parameters
-    public List<BookDTO> getBooksByTitleAndAuthorAndGenreAndAmount(String title, String author, String genre, int amount) {
-        return bookRepository.findByTitleAndAuthorAndGenreAndAmount(title, author, genre, amount)
-                .stream()
-                .map(bookDTOMapper::mapToBookDTO)
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getBooksByTitleAndAuthorAndGenreAndAmount(String title, String author, String genre, int amount) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<BookDTO> list = this.bookRepository.findByTitleAndAuthorAndGenreAndAmount(title, author, genre, amount)
+                    .stream()
+                    .map(bookDTOMapper::mapToBookDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<Object> newProduct(BookDTO book) {
-        HashMap<String, Object> message = new HashMap<>();
+        Map<String, Object> dataMap = new HashMap<String, Object>();
         try {
             if(book.getISBN() != null) {
-                message.put("success", book);
-                message.put("message", "Book edited successfully");
+                dataMap.put("status", 1);
+                dataMap.put("data", book);
+                dataMap.put("message", "book edited successfully");
             } else {
-                message.put("success", book);
-                message.put("message", "Book created successfully");
+                dataMap.put("status", 1);
+                dataMap.put("data", book);
+                dataMap.put("message", "book created successfully");
             }
 
             Book bookToSave = new Book(
@@ -166,47 +473,33 @@ public class BookServiceImpl implements BookService {
             );
 
             this.bookRepository.save(bookToSave);
-            return new ResponseEntity<>(
-                    message,
-                    HttpStatus.CREATED
-            );
+            return new ResponseEntity<>(dataMap, HttpStatus.OK);
         } catch (Exception e) {
-            message.put("error", true);
-            message.put("message", "Something went wrong");
-            return new ResponseEntity<>(
-                    message,
-                    HttpStatus.CONFLICT
-            );
+            dataMap.put("status", 1);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     public ResponseEntity<Object> removeBook(String isbn) {
         boolean exists = bookRepository.existsById(isbn);
-        HashMap<String, Object> message = new HashMap<>();
+        Map<String, Object> dataMap = new HashMap<String, Object>();
 
         if(!exists) {
-            message.put("error", true);
-            message.put("message", "Book does not exist");
-            return new ResponseEntity<>(
-                    message,
-                    HttpStatus.CONFLICT
-            );
+            dataMap.put("status", 1);
+            dataMap.put("data", "Book not found");
+            return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
         }
 
         try {
-            message.put("message", "Book deleted successfully");
+            dataMap.put("status", 1);
+            dataMap.put("data", "Book deleted successfully");
             this.bookRepository.deleteById(isbn);
-            return new ResponseEntity<>(
-                    message,
-                    HttpStatus.ACCEPTED
-            );
+            return new ResponseEntity<>(dataMap, HttpStatus.OK);
         } catch (Exception e) {
-            message.put("error", true);
-            message.put("message", "Something went wrong");
-            return new ResponseEntity<>(
-                    message,
-                    HttpStatus.CONFLICT
-            );
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 }

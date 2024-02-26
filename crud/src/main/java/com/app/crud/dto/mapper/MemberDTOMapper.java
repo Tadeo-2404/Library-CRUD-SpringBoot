@@ -11,6 +11,7 @@ import java.util.function.Function;
 @Service
 public class MemberDTOMapper implements Function<Member, MemberDTO> {
     @Override
+    //TODO add methods and remove apply
     public MemberDTO apply(Member member) {
         return new MemberDTO(
                 member.getMemberId(),
