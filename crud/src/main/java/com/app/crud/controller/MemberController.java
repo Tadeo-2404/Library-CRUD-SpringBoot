@@ -28,7 +28,7 @@ public class MemberController {
     }
 
     @GetMapping
-    public List<MemberDTO> getMembers(@RequestParam Map<String,String> allParams) {
+    public ResponseEntity<Object> getMembers(@RequestParam Map<String,String> allParams) {
         String ID = allParams.get("ID");
         String name = allParams.get("name");
         String ageStr = allParams.get("age");
@@ -51,10 +51,7 @@ public class MemberController {
         }
 
         if (ID != null) {
-            List<MemberDTO> list = new ArrayList<>();
-            MemberDTO member = memberService.getMemberByID(ID);
-            list.add(member);
-            return list;
+            return memberService.getMemberByID(ID);
         } else if (name != null) {
             return memberService.getMemberByName(name);
         } else if (lastname != null) {

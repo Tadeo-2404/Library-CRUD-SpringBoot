@@ -9,15 +9,22 @@ import org.springframework.stereotype.Service;
 import java.util.function.Function;
 
 @Service
-public class MemberDTOMapper implements Function<Member, MemberDTO> {
-    @Override
-    //TODO add methods and remove apply
-    public MemberDTO apply(Member member) {
+public class MemberDTOMapper  {
+    public MemberDTO mapToMemberDTO(Member member) {
         return new MemberDTO(
                 member.getMemberId(),
                 member.getName(),
                 member.getLastname(),
                 member.getAge()
+        );
+    }
+
+    public Member mapToMember(MemberDTO memberDTO) {
+        return new Member(
+                memberDTO.getMemberId(),
+                memberDTO.getName(),
+                memberDTO.getLastname(),
+                memberDTO.getAge()
         );
     }
 }
