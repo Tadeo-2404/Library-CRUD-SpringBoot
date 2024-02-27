@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -23,16 +24,18 @@ public class MemberBookController {
     }
 
     @GetMapping
-    public List<MemberBook> getMemberBooks(@RequestParam Map<String,String> allParams) {
-        String member_book_id = allParams.get("member_book_id");
+    public ResponseEntity<Object> getMemberBooks(@RequestParam Map<String,String> allParams) {
+        String ID = allParams.get("ID");
         String member_id = allParams.get("member_id");
         String loan_id = allParams.get("loan_id");
         String isbn = allParams.get("isbn");
-        int amount_borrowed = parseInt(allParams.get("amount_borrowed"));
+        Integer amount_borrowed = null;
+        if (allParams.get("amount_borrowed") != null) {
+            amount_borrowed = Integer.parseInt(allParams.get("amount_borrowed"));
+        }
 
-        if(member_book_id != null) {
-            MemberBook memberBook = memberBookService.getById(member_book_id);
-            return Collections.singletonList(memberBook);
+        if(ID != null) {
+            return memberBookService.getById(ID);
         }
         else if(member_id != null) {
             return memberBookService.getByMember_MemberId(member_id);
@@ -40,7 +43,7 @@ public class MemberBookController {
             return memberBookService.getByLoan_ID(loan_id);
         } else if(isbn != null) {
             return memberBookService.getByBookISBN(isbn);
-        } else if(amount_borrowed != 0) {
+        } else if(amount_borrowed != null) {
             return memberBookService.getByAmountBorrowed(amount_borrowed);
         }
 
@@ -48,7 +51,7 @@ public class MemberBookController {
     }
 
     @PostMapping
-    public ResponseEntity<String> createMemberBook(@RequestBody MemberBook memberBook) {;
+    public ResponseEntity<Object> createMemberBook(@RequestBody MemberBook memberBook) {;
         return this.memberBookService.createMemberBook(memberBook);
     }
 }

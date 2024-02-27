@@ -4,11 +4,9 @@ import com.app.crud.model.book.Book;
 import com.app.crud.model.loan.Loan;
 import com.app.crud.model.member.Member;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -18,22 +16,19 @@ import lombok.Setter;
 public class MemberBook {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "memberBook_id")
-    private String memberBook_id;
+    @Column(name = "ID")
+    private String ID;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "memberId", referencedColumnName = "memberId")
     private Member member;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "ISBN", referencedColumnName = "ISBN")
     private Book book;
 
-    @OneToOne
-    @JoinColumn(
-            name = "loan_ID",
-            referencedColumnName = "ID"
-    )
+    @OneToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "loan_ID", referencedColumnName = "ID")
     private Loan loan;
     private int amountBorrowed;
 }

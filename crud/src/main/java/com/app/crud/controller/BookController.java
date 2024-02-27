@@ -5,8 +5,6 @@ import com.app.crud.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -20,7 +18,7 @@ public class BookController {
     }
 
     @GetMapping
-    public List<BookDTO> getBooks(@RequestParam Map<String,String> allParams) {
+    public ResponseEntity<Object> getBooks(@RequestParam Map<String,String> allParams) {
         String ISBN = allParams.get("ISBN");
         String title = allParams.get("title");
         String author = allParams.get("author");

@@ -8,7 +8,6 @@ import com.app.crud.model.member.Member;
 import com.app.crud.repository.AddressRepository;
 import com.app.crud.repository.MemberRepository;
 import com.app.crud.service.MemberService;
-import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,188 +34,635 @@ public class MemberServiceImpl implements MemberService {
     }
 
     //get all members
-    public List<MemberDTO> getMembers() {
-        return memberRepository.findAll()
-                .stream().map(memberDTOMapper).collect(Collectors.toList());
+    public ResponseEntity<Object> getMembers() {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.memberRepository.findAll()
+                    .stream()
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     //get member by ID
-    public MemberDTO getMemberByID(String memberId) {
-        return memberRepository.findById(memberId)
-                .map(memberDTOMapper)
-                .orElseThrow(() -> new EntityNotFoundException("Member not found with ID: " + memberId));
+    public ResponseEntity<Object> getMemberByID(String memberId) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            Member member = this.memberRepository.getById(memberId);
+            MemberDTO memberDTO = this.memberDTOMapper.mapToMemberDTO(member);
+
+            if(memberDTO != null) {
+                dataMap.put("status", 1);
+                dataMap.put("data", memberDTO);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     //get member by name
-    public List<MemberDTO> getMemberByName(String name) {
-        return memberRepository.getByName(name)
-                .stream().map(memberDTOMapper).collect(Collectors.toList());
+    public ResponseEntity<Object> getMemberByName(String name) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.memberRepository.getByName(name)
+                    .stream()
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     //get member by lastname
-    public List<MemberDTO> getMemberByLastname(String lastname) {
-        return memberRepository.getByLastname(lastname)
-                .stream().map(memberDTOMapper).collect(Collectors.toList());
+    public ResponseEntity<Object> getMemberByLastname(String lastname) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.memberRepository.getByLastname(lastname)
+                    .stream()
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     //get member by age
-    public List<MemberDTO> getMemberByAge(int age) {
-        return memberRepository.getByAge(age)
-                .stream().map(memberDTOMapper).collect(Collectors.toList());
+    public ResponseEntity<Object> getMemberByAge(int age) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.memberRepository.getByAge(age)
+                    .stream()
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     //get member by name and lastname
-    public List<MemberDTO> getMemberByNameAndLastname(String name, String lastname) {
-        return memberRepository.getByNameAndLastname(name, lastname)
-                .stream().map(memberDTOMapper).collect(Collectors.toList());
+    public ResponseEntity<Object> getMemberByNameAndLastname(String name, String lastname) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.memberRepository.getByNameAndLastname(name, lastname)
+                    .stream()
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     //get member by name and age
-    public List<MemberDTO> getMemberByNameAndAge(String name, int age) {
-        return memberRepository.getByNameAndAge(name, age)
-                .stream().map(memberDTOMapper).collect(Collectors.toList());
+    public ResponseEntity<Object> getMemberByNameAndAge(String name, int age) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.memberRepository.getByNameAndAge(name, age)
+                    .stream()
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     //get member by lastname and age
-    public List<MemberDTO> getMemberByLastnameAndAge(String lastname, int age) {
-        return memberRepository.getByLastnameAndAge(lastname, age)
-                .stream().map(memberDTOMapper).collect(Collectors.toList());
+    public ResponseEntity<Object> getMemberByLastnameAndAge(String lastname, int age) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.memberRepository.getByLastnameAndAge(lastname, age)
+                    .stream()
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     //get member by lastname and lastname and age
-    public List<MemberDTO> getMemberByNameAndLastnameAndAge(String name, String lastname, int age) {
-        return memberRepository.getByNameAndLastnameAndAge(name, lastname, age)
-                .stream().map(memberDTOMapper).collect(Collectors.toList());
+    public ResponseEntity<Object> getMemberByNameAndLastnameAndAge(String name, String lastname, int age) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.memberRepository.getByLastnameAndAge(lastname, age)
+                    .stream()
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
     //get members by city
-    public List<MemberDTO> getMembersByCity(String city) {
-        return addressRepository.findByCity(city)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByCity(String city) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByCity(city)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //get members by street
-    public List<MemberDTO> getMembersByStreet(String street) {
-        return addressRepository.findByStreet(street)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByStreet(String street) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByStreet(street)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //get members by state
-    public List<MemberDTO> getMembersByState(String state) {
-        return addressRepository.findByState(state)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByState(String state) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByState(state)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     //get members by postalCode
-    public List<MemberDTO> getMembersByPostalCode(String postalCode) {
-        return addressRepository.findByPostalCode(postalCode)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByPostalCode(String postalCode) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByPostalCode(postalCode)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get members by city and street
-    public List<MemberDTO> getMembersByCityAndStreet(String street, String city) {
-        return addressRepository.findByStreetAndCity(street, city)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByCityAndStreet(String street, String city) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByStreetAndCity(street, city)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get members by street and state
-    public List<MemberDTO> getMembersByStreetAndState(String street, String state) {
-        return addressRepository.findByStreetAndState(street, state)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByStreetAndState(String street, String state) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByStreetAndState(street, state)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get members by street and postal code
-    public List<MemberDTO> getMembersByStreetAndPostalCode(String street, String postalCode) {
-        return addressRepository.findByStreetAndPostalCode(street, postalCode)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByStreetAndPostalCode(String street, String postalCode) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByStreetAndPostalCode(street, postalCode)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get members by city and state
-    public List<MemberDTO> getMembersByCityAndState(String city, String state) {
-        return addressRepository.findByCityAndState(city, state)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByCityAndState(String city, String state) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByCityAndState(city, state)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get members by city and postal code
-    public List<MemberDTO> getMembersByCityAndPostalCode(String city, String postalCode) {
-        return addressRepository.findByCityAndPostalCode(city, postalCode)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByCityAndPostalCode(String city, String postalCode) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByCityAndPostalCode(city, postalCode)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get members by state and postal code
-    public List<MemberDTO> getMembersByStateAndPostalCode(String state, String postalCode) {
-        return addressRepository.findByStateAndPostalCode(state, postalCode)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByStateAndPostalCode(String state, String postalCode) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByStateAndPostalCode(state, postalCode)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get members by street, city, and state
-    public List<MemberDTO> getMembersByStreetAndCityAndState(String street, String city, String state) {
-        return addressRepository.findByStreetAndCityAndState(street, city, state)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByStreetAndCityAndState(String street, String city, String state) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByStreetAndCityAndState(street, city, state)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get members by street, city, and postal code
-    public List<MemberDTO> getMembersByStreetAndCityAndPostalCode(String street, String city, String postalCode) {
-        return addressRepository.findByStreetAndCityAndPostalCode(street, city, postalCode)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByStreetAndCityAndPostalCode(String street, String city, String postalCode) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByStreetAndCityAndPostalCode(street, city, postalCode)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get members by street, state, and postal code
-    public List<MemberDTO> getMembersByStreetAndStateAndPostalCode(String street, String state, String postalCode) {
-        return addressRepository.findByStreetAndStateAndPostalCode(street, state, postalCode)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByStreetAndStateAndPostalCode(String street, String state, String postalCode) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByStreetAndStateAndPostalCode(street, state, postalCode)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get members by city, state, and postal code
-    public List<MemberDTO> getMembersByCityAndStateAndPostalCode(String city, String state, String postalCode) {
-        return addressRepository.findByCityAndStateAndPostalCode(city, state, postalCode)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByCityAndStateAndPostalCode(String city, String state, String postalCode) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByCityAndStateAndPostalCode(city, state, postalCode)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     // Get members by street, city, state, and postal code
-    public List<MemberDTO> getMembersByStreetAndCityAndStateAndPostalCode(String street, String city, String state, String postalCode) {
-        return addressRepository.findByStreetAndCityAndStateAndPostalCode(street, city, state, postalCode)
-                .stream()
-                .map(Address::getMember)  // Map addresses to members
-                .map(memberDTOMapper)      // Map members to DTOs
-                .collect(Collectors.toList());
+    public ResponseEntity<Object> getMembersByStreetAndCityAndStateAndPostalCode(String street, String city, String state, String postalCode) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            List<MemberDTO> list = this.addressRepository.findByStreetAndCityAndStateAndPostalCode(street, city, state, postalCode)
+                    .stream()
+                    .map(Address::getMember)  // Map addresses to members
+                    .map(memberDTOMapper::mapToMemberDTO)
+                    .collect(Collectors.toList());
+
+            if(list.size() > 0) {
+                dataMap.put("status", 1);
+                dataMap.put("data", list);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     public ResponseEntity<Object> addMember(MemberDTO memberDTO, AddressDTO addressDTO) {
-        HashMap<String, Object> message = new HashMap<>();
+        Map<String, Object> dataMap = new HashMap<String, Object>();
         try {
             // Convert DTOs to entities
             Member member = new Member(
@@ -244,26 +691,29 @@ public class MemberServiceImpl implements MemberService {
             // Save the updated member
             this.memberRepository.save(memberSaved);
 
-            message.put("message", "Member created successfully");
-            return new ResponseEntity<>(message, HttpStatus.CREATED);
+            dataMap.put("status", 1);
+            dataMap.put("message", "Member created successfully");
+            return new ResponseEntity<>(dataMap, HttpStatus.CREATED);
         } catch (Exception e) {
-            message.put("message", e.getMessage());
-            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+            dataMap.put("message", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     public ResponseEntity<Object> editMember(MemberDTO memberDTO, AddressDTO addressDTO) {
-        HashMap<String, Object> message = new HashMap<>();
+        Map<String, Object> dataMap = new HashMap<String, Object>();
         //valid if member already exist
         if (memberDTO.getMemberId() == null) {
-            message.put("message", "Member must contain an ID");
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            dataMap.put("status", 1);
+            dataMap.put("data", "Member must contain an ID");
+            return new ResponseEntity<>(dataMap, HttpStatus.BAD_REQUEST);
         }
 
         //valid if address already exist
         if (addressDTO.getAddress_id() == null) {
-            message.put("message", "Address must contain an ID");
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            dataMap.put("status", 1);
+            dataMap.put("data", "Address must contain an ID");
+            return new ResponseEntity<>(dataMap, HttpStatus.BAD_REQUEST);
         }
 
         Member memberExist = memberRepository.getById(memberDTO.getMemberId());
@@ -271,20 +721,23 @@ public class MemberServiceImpl implements MemberService {
 
         //valid if member exist
         if (memberExist == null) {
-            message.put("message", "Member does not exist");
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            dataMap.put("status", 1);
+            dataMap.put("data", "Member does not exist");
+            return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
         }
 
         //valid if address exist
         if (addressExist == null) {
-            message.put("message", "Address does not exist");
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            dataMap.put("status", 1);
+            dataMap.put("data", "Address does not exist");
+            return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
         }
 
         //valid if member and address have the same ID
         if (!memberDTO.getMemberId().equals(addressExist.getMember().getMemberId())) {
-            message.put("message", "The ID's do not match");
-            return new ResponseEntity<>(message, HttpStatus.BAD_REQUEST);
+            dataMap.put("status", 1);
+            dataMap.put("data", "The ID's does not match");
+            return new ResponseEntity<>(dataMap, HttpStatus.BAD_REQUEST);
         }
 
         try {
@@ -303,11 +756,13 @@ public class MemberServiceImpl implements MemberService {
             this.memberRepository.save(memberExist);
             this.addressRepository.save(addressExist);
 
-            message.put("message", "Member edited successfully");
-            return new ResponseEntity<>(message, HttpStatus.ACCEPTED);
+            dataMap.put("status", 1);
+            dataMap.put("data", "Member edited successfully");
+            return new ResponseEntity<>(dataMap, HttpStatus.OK);
         } catch (Exception e) {
-            message.put("message", e.getMessage());
-            return new ResponseEntity<>(message, HttpStatus.CONFLICT);
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.BAD_REQUEST);
         }
     }
 
