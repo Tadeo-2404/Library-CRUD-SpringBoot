@@ -1,6 +1,8 @@
 package com.app.crud.controller;
 
+import com.app.crud.dto.BookDTO;
 import com.app.crud.dto.LoanDTO;
+import com.app.crud.dto.request.loan.LoanRequest;
 import com.app.crud.model.loan.Loan;
 import com.app.crud.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +47,9 @@ public class LoanController {
         }
     }
 
-
     @PostMapping
-    public ResponseEntity<Object> createLoan(@RequestBody Loan loan) {
-        return loanService.createLoan(loan);
+    public ResponseEntity<Object> createLoan(@RequestBody LoanRequest loanRequest) {
+        return loanService.createLoan(loanRequest);
     }
 
     @PutMapping

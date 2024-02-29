@@ -31,4 +31,11 @@ public class MemberBook {
     @JoinColumn(name = "loan_ID", referencedColumnName = "ID")
     private Loan loan;
     private int amountBorrowed;
+
+    public MemberBook(Member member, Loan loanCreated, Book book, int amountBorrowed) {
+        this.member = member;
+        this.loan = loanCreated;
+        this.book = book;
+        this.amountBorrowed = amountBorrowed;
+    }
 }
