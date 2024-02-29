@@ -1,10 +1,15 @@
 package com.app.crud.service.Impl;
 
 import com.app.crud.dto.LoanDTO;
+import com.app.crud.dto.mapper.BookDTOMapper;
 import com.app.crud.dto.mapper.LoanDTOMapper;
+import com.app.crud.dto.request.loan.BookLoanDetails;
+import com.app.crud.dto.request.loan.LoanRequest;
 import com.app.crud.model.loan.Loan;
 import com.app.crud.model.member.Member;
+import com.app.crud.model.memberBook.MemberBook;
 import com.app.crud.repository.LoanRepository;
+import com.app.crud.repository.MemberBookRepository;
 import com.app.crud.repository.MemberRepository;
 import com.app.crud.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,12 +27,20 @@ public class LoanServiceImpl implements LoanService {
     private final LoanRepository loanRepository;
     private final MemberRepository memberRepository;
     private final LoanDTOMapper loanDTOMapper;
+    private final MemberBookRepository memberBookRepository;
+    private final BookDTOMapper bookDTOMapper;
 
     @Autowired
-    public LoanServiceImpl(LoanRepository loanRepository, MemberRepository memberRepository, LoanDTOMapper loanDTOMapper) {
+    public LoanServiceImpl(LoanRepository loanRepository,
+                           MemberRepository memberRepository,
+                           LoanDTOMapper loanDTOMapper,
+                           MemberBookRepository memberBookRepository,
+                           BookDTOMapper bookDTOMapper) {
         this.loanRepository = loanRepository;
         this.memberRepository = memberRepository;
         this.loanDTOMapper = loanDTOMapper;
+        this.memberBookRepository = memberBookRepository;
+        this.bookDTOMapper = bookDTOMapper;
     }
 
     public LoanDTO getById(String Id) {
@@ -38,8 +51,6 @@ public class LoanServiceImpl implements LoanService {
             return null; // or throw an exception indicating the loan was not found
         }
     }
-
-
 
     public List<LoanDTO> getLoans() {
         return this.loanRepository.findAll()
@@ -97,13 +108,18 @@ public class LoanServiceImpl implements LoanService {
                 .collect(Collectors.toList());
     }
 
-    public ResponseEntity<Object> createLoan(Loan loan) {
+    public ResponseEntity<Object> createLoan(LoanRequest loanRequest) {
         HashMap<String, Object> message = new HashMap<>();
 
+        System.out.println("loan: " + loanRequest.getLoan());
+        for (BookLoanDetails bookLoanDetails: loanRequest.getBookLoanDetailsList()) {
+            System.out.println("book: " + bookLoanDetails.getBook());
+        }
+
         //verify if member exist
-        Member memberExist = memberRepository.getById(loan.getMember().getMemberId());
+        Member memberExist = memberRepository.getById(loanRequest.getLoan().getMember().getMemberId());
         if(memberExist == null) {
-            message.put("error", "Member with ID" + loan.getMember().getMemberId() + "does not exist");
+            message.put("error", "Member with ID" + loanRequest.getLoan().getMember().getMemberId() + "does not exist");
             return new ResponseEntity<>(
                     message,
                     HttpStatus.CONFLICT
@@ -111,7 +127,16 @@ public class LoanServiceImpl implements LoanService {
         }
 
         try {
-            Loan loanCreated = this.loanRepository.save(loan);
+            Loan loanCreated = this.loanRepository.save(loanRequest.getLoan());
+            for (BookLoanDetails bookLoanDetails: loanRequest.getBookLoanDetailsList()) {
+                MemberBook memberBook = new MemberBook(
+                        loanRequest.getLoan().getMember(),
+                        loanCreated,
+                        bookDTOMapper.mapToBook(bookLoanDetails.getBook()),
+                        bookLoanDetails.getAmountBorrowed()
+                );
+                message.put("msg", "MemberBook with ID " +  memberBook.getID() + " created");
+            }
             message.put("success", loanCreated);
 
             return new ResponseEntity<>(

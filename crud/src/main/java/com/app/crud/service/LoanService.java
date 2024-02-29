@@ -1,5 +1,6 @@
 package com.app.crud.service;
 import com.app.crud.dto.LoanDTO;
+import com.app.crud.dto.request.loan.LoanRequest;
 import com.app.crud.model.loan.Loan;
 import org.springframework.http.ResponseEntity;
 import java.time.LocalDateTime;
@@ -25,7 +26,7 @@ public interface LoanService {
 
     public List<LoanDTO> getByMemberIdAndDateBorrowAndDateLimit(String memberId, LocalDateTime dateBorrow, LocalDateTime dateLimit);
 
-    public ResponseEntity<Object> createLoan(Loan loan);
+    public ResponseEntity<Object> createLoan(LoanRequest loanRequest);
 
     public ResponseEntity<Object> editLoan(Loan loan);
 }
