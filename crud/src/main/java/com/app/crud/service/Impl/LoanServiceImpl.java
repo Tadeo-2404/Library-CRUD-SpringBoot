@@ -18,8 +18,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -111,11 +113,6 @@ public class LoanServiceImpl implements LoanService {
     public ResponseEntity<Object> createLoan(LoanRequest loanRequest) {
         HashMap<String, Object> message = new HashMap<>();
 
-        System.out.println("loan: " + loanRequest.getLoan());
-        for (BookLoanDetails bookLoanDetails: loanRequest.getBookLoanDetailsList()) {
-            System.out.println("book: " + bookLoanDetails.getBook());
-        }
-
         //verify if member exist
         Member memberExist = memberRepository.getById(loanRequest.getLoan().getMember().getMemberId());
         if(memberExist == null) {
@@ -130,14 +127,15 @@ public class LoanServiceImpl implements LoanService {
             Loan loanCreated = this.loanRepository.save(loanRequest.getLoan());
             for (BookLoanDetails bookLoanDetails: loanRequest.getBookLoanDetailsList()) {
                 MemberBook memberBook = new MemberBook(
-                        loanRequest.getLoan().getMember(),
-                        loanCreated,
+                        memberExist,
                         bookDTOMapper.mapToBook(bookLoanDetails.getBook()),
+                        loanCreated,
                         bookLoanDetails.getAmountBorrowed()
                 );
-                message.put("msg", "MemberBook with ID " +  memberBook.getID() + " created");
+
+                memberBookRepository.save(memberBook);
             }
-            message.put("success", loanCreated);
+            message.put("data", loanCreated);
 
             return new ResponseEntity<>(
                     message,

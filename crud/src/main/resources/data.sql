@@ -135,24 +135,3 @@ VALUES
 (UUID(), '2024-02-25T09:15:00', '2024-03-01T09:15:00', (SELECT member_id FROM Member WHERE name = 'Olivia' AND lastname = 'Hernandez'));
 
 -- Inserting more data into the MemberBook table
-INSERT INTO member_book (ID, member_id, ISBN, loan_id, amount_borrowed)
-VALUES
-(UUID(), (SELECT member_id FROM Member WHERE name = 'Benjamin' AND lastname = 'White'),
-(SELECT ISBN FROM Book WHERE title = 'Where the Crawdads Sing' AND author = 'Delia Owens'),
-(SELECT ID FROM Loan WHERE member_id = (SELECT member_id FROM Member WHERE name = 'Benjamin' AND lastname = 'White') AND date_borrow = '2024-02-22T11:45:00'),
-1),
-
-(UUID(), (SELECT member_id FROM Member WHERE name = 'Sophia' AND lastname = 'Garcia'),
-(SELECT ISBN FROM Book WHERE title = 'Educated' AND author = 'Tara Westover'),
-(SELECT ID FROM Loan WHERE member_id = (SELECT member_id FROM Member WHERE name = 'Sophia' AND lastname = 'Garcia') AND date_borrow = '2024-02-23T14:20:00'),
-1),
-
-(UUID(), (SELECT member_id FROM Member WHERE name = 'Matthew' AND lastname = 'Anderson'),
-(SELECT ISBN FROM Book WHERE title = 'The Testaments' AND author = 'Margaret Atwood'),
-(SELECT ID FROM Loan WHERE member_id = (SELECT member_id FROM Member WHERE name = 'Matthew' AND lastname = 'Anderson') AND date_borrow = '2024-02-24T16:30:00'),
-1),
-
-(UUID(), (SELECT member_id FROM Member WHERE name = 'Olivia' AND lastname = 'Hernandez'),
-(SELECT ISBN FROM Book WHERE title = 'Little Fires Everywhere' AND author = 'Celeste Ng'),
-(SELECT ID FROM Loan WHERE member_id = (SELECT member_id FROM Member WHERE name = 'Olivia' AND lastname = 'Hernandez') AND date_borrow = '2024-02-25T09:15:00'),
-1);

@@ -16,10 +16,10 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "memberId", unique = true, nullable = false)
     private String memberId;
-    @Column(name = "name", unique = false, nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 50)
     private String name;
-    @Column(name = "lastname", unique = false, nullable = false, length = 50)
+    @Column(name = "lastname", nullable = false, length = 50)
     private String lastname;
-    @Column(name = "age", unique = false, nullable = true)
+    @Column(name = "age", nullable = true)
     private int age;
 }

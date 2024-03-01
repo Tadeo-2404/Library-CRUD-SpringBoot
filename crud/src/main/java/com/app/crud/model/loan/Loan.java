@@ -18,16 +18,16 @@ import java.time.LocalDateTime;
 public class Loan {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "ID", unique = true, nullable = false)
-    String ID;
+    @Column(name = "ID", nullable = false, unique = true)
+    private String ID;
+
     @Column(name = "dateBorrow", nullable = false)
-    LocalDateTime dateBorrow;
+    private LocalDateTime dateBorrow;
+
     @Column(name = "dateLimit", nullable = false)
-    LocalDateTime dateLimit;
-    @OneToOne
-    @JoinColumn(
-            name = "member_id",
-            nullable = false
-    )
+    private LocalDateTime dateLimit;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "member_id", nullable = false, unique = false)
     private Member member;
 }
