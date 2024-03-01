@@ -15,14 +15,14 @@ import lombok.Setter;
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "ISBN", unique = true, nullable = false)
+    @Column(name = "ISBN", nullable = false, unique = true) // Keep unique constraint
     private String ISBN;
-    @Column(name = "title", unique = false, nullable = false, length = 50)
+    @Column(name = "title", nullable = false, length = 50)
     private String title;
-    @Column(name = "author", unique = false, nullable = false, length = 50)
+    @Column(name = "author", nullable = false, length = 50)
     private String author;
-    @Column(name = "genre", unique = false, nullable = false, length = 50)
+    @Column(name = "genre", nullable = false, length = 50)
     private String genre;
-    @Column(name = "amount", unique = false, nullable = false)
+    @Column(name = "amount", nullable = false)
     private int amount;
 }

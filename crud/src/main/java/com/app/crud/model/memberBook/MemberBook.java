@@ -27,15 +27,18 @@ public class MemberBook {
     @JoinColumn(name = "ISBN", referencedColumnName = "ISBN")
     private Book book;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    // Remove unique constraint from loan_ID
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "loan_ID", referencedColumnName = "ID")
     private Loan loan;
+
     private int amountBorrowed;
 
-    public MemberBook(Member member, Loan loanCreated, Book book, int amountBorrowed) {
+    // Constructor without ID parameter
+    public MemberBook(Member member, Book book, Loan loan, int amountBorrowed) {
         this.member = member;
-        this.loan = loanCreated;
         this.book = book;
+        this.loan = loan;
         this.amountBorrowed = amountBorrowed;
     }
 }
