@@ -16,9 +16,12 @@ public class LoanDTOMapper {
 
         MemberDTO memberDTO = new MemberDTO(
                 member.getMemberId(),
+                member.getUsername(),
+                member.getPassword(),
                 member.getName(),
                 member.getLastname(),
-                member.getAge()
+                member.getAge(),
+                member.getRole()
         );
 
         return new LoanDTO(
@@ -33,9 +36,12 @@ public class LoanDTOMapper {
         MemberDTO memberDTO = loanDTO.getMemberDTO();
         Member member = new Member(
                 memberDTO.getMemberId(),
+                memberDTO.getUsername(),
+                memberDTO.getPassword(),
                 memberDTO.getName(),
                 memberDTO.getLastname(),
-                memberDTO.getAge()
+                memberDTO.getAge(),
+                memberDTO.getRole()
         );
 
         return new Loan(

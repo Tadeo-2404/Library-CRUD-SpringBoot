@@ -78,28 +78,28 @@ INSERT INTO book (ISBN, title, author, genre, amount) VALUES
 (UUID(), 'Mistborn: The Bands of Mourning', 'Brandon Sanderson', 'Fantasy', 820);
 
 -- Inserting data into the Member table
-INSERT INTO Member (member_id, name, lastname, age)
+INSERT INTO Member (member_id, username, password, name, lastname, age, role)
 VALUES
-    (UUID(), 'John', 'Doe', 32),
-    (UUID(), 'Alice', 'Smith', 28),
-    (UUID(), 'Michael', 'Johnson', 35),
-    (UUID(), 'Emily', 'Brown', 40),
-    (UUID(), 'David', 'Martinez', 26),
-    (UUID(), 'Sarah', 'Wilson', 33),
-    (UUID(), 'Matthew', 'Anderson', 45),
-    (UUID(), 'Emma', 'Taylor', 29),
-    (UUID(), 'Daniel', 'Thomas', 38),
-    (UUID(), 'Olivia', 'Hernandez', 31),
-    (UUID(), 'James', 'Young', 27),
-    (UUID(), 'Sophia', 'Garcia', 42),
-    (UUID(), 'William', 'Lee', 34),
-    (UUID(), 'Ava', 'Jones', 30),
-    (UUID(), 'Benjamin', 'White', 37),
-    (UUID(), 'Mia', 'Clark', 39),
-    (UUID(), 'Alexander', 'Allen', 36),
-    (UUID(), 'Ella', 'Lewis', 41),
-    (UUID(), 'Jackson', 'King', 25),
-    (UUID(), 'Victoria', 'Scott', 43);
+    (UUID(), 'john_doe', 'password123', 'John', 'Doe', 32, 'ADMINISTRATOR'),
+    (UUID(), 'alice_smith', 'password456', 'Alice', 'Smith', 28, 'CLIENT'),
+    (UUID(), 'michael_johnson', 'password789', 'Michael', 'Johnson', 35, 'ADMINISTRATOR'),
+    (UUID(), 'emily_brown', 'password321', 'Emily', 'Brown', 40, 'CLIENT'),
+    (UUID(), 'david_martinez', 'password654', 'David', 'Martinez', 26, 'ADMINISTRATOR'),
+    (UUID(), 'sarah_wilson', 'password987', 'Sarah', 'Wilson', 33, 'CLIENT'),
+    (UUID(), 'matthew_anderson', 'password123', 'Matthew', 'Anderson', 45, 'ADMINISTRATOR'),
+    (UUID(), 'emma_taylor', 'password456', 'Emma', 'Taylor', 29, 'CLIENT'),
+    (UUID(), 'daniel_thomas', 'password789', 'Daniel', 'Thomas', 38, 'ADMINISTRATOR'),
+    (UUID(), 'olivia_hernandez', 'password321', 'Olivia', 'Hernandez', 31, 'CLIENT'),
+    (UUID(), 'james_young', 'password654', 'James', 'Young', 27, 'ADMINISTRATOR'),
+    (UUID(), 'sophia_garcia', 'password987', 'Sophia', 'Garcia', 42, 'CLIENT'),
+    (UUID(), 'william_lee', 'password123', 'William', 'Lee', 34, 'ADMINISTRATOR'),
+    (UUID(), 'ava_jones', 'password456', 'Ava', 'Jones', 30, 'CLIENT'),
+    (UUID(), 'benjamin_white', 'password789', 'Benjamin', 'White', 37, 'ADMINISTRATOR'),
+    (UUID(), 'mia_clark', 'password321', 'Mia', 'Clark', 39, 'CLIENT'),
+    (UUID(), 'alexander_allen', 'password654', 'Alexander', 'Allen', 36, 'ADMINISTRATOR'),
+    (UUID(), 'ella_lewis', 'password987', 'Ella', 'Lewis', 41, 'CLIENT'),
+    (UUID(), 'jackson_king', 'password123', 'Jackson', 'King', 25, 'ADMINISTRATOR'),
+    (UUID(), 'victoria_scott', 'password456', 'Victoria', 'Scott', 43, 'CLIENT');
 
 -- Inserting data into the Address table
 INSERT INTO Address (address_id, street, city, state, postal_code, member_id)
