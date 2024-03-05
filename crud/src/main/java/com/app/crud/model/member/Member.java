@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -16,8 +19,8 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "memberId", unique = true, nullable = false)
     private String memberId;
-    @Column(name = "username", nullable = false, length = 50)
-    private String username;
+    @Column(name = "email", nullable = false, length = 50)
+    private String email;
     @Column(name = "password", nullable = false, length = 50)
     private String password;
     @Column(name = "name", nullable = false, length = 50)
@@ -26,8 +29,17 @@ public class Member {
     private String lastname;
     @Column(name = "age", nullable = true)
     private int age;
-    @Column(name = "role", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Role role;
 
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            targetEntity = Role.class,
+            cascade = CascadeType.PERSIST
+    )
+    @JoinTable(
+            name = "member_roles",
+            joinColumns = @JoinColumn(name = "member_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "role_id", nullable = false)
+
+    )
+    private Set<Role> roles = new HashSet<>();
 }

@@ -667,12 +667,12 @@ public class MemberServiceImpl implements MemberService {
             // Convert DTOs to entities
             Member member = new Member(
                     memberDTO.getMemberId(),
-                    memberDTO.getUsername(),
+                    memberDTO.getEmail(),
                     memberDTO.getPassword(),
                     memberDTO.getName(),
                     memberDTO.getLastname(),
                     memberDTO.getAge(),
-                    memberDTO.getRole()
+                    memberDTO.getRoles()
             );
             Address address = new Address(
                     member, // Member should be passed as the first parameter

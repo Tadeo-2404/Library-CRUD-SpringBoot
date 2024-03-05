@@ -13,24 +13,24 @@ public class MemberDTOMapper  {
     public MemberDTO mapToMemberDTO(Member member) {
         return new MemberDTO(
                 member.getMemberId(),
-                member.getUsername(),
+                member.getEmail(),
                 member.getPassword(),
                 member.getName(),
                 member.getLastname(),
                 member.getAge(),
-                member.getRole()
+                member.getRoles()
         );
     }
 
     public Member mapToMember(MemberDTO memberDTO) {
         return new Member(
                 memberDTO.getMemberId(),
-                memberDTO.getUsername(),
+                memberDTO.getEmail(),
                 memberDTO.getPassword(),
                 memberDTO.getName(),
                 memberDTO.getLastname(),
                 memberDTO.getAge(),
-                memberDTO.getRole()
+                memberDTO.getRoles()
         );
     }
 }
