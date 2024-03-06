@@ -10,6 +10,7 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<Member, String> {
     @Override
     Member getById(String ID);
+    Member getByEmail(String email);
     List<Member> getByName(String name);
     List<Member> getByLastname(String lastname);
     List<Member> getByAge(int age);

@@ -131,6 +131,31 @@ public class MemberServiceImpl implements MemberService {
             return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    //get member by email
+    public ResponseEntity<Object> getMemberByEmail(String email) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+
+        try {
+            Member member = this.memberRepository.getByEmail(email);
+            MemberDTO memberDTO = this.memberDTOMapper.mapToMemberDTO(member);
+
+            if(memberDTO != null) {
+                dataMap.put("status", 1);
+                dataMap.put("data", memberDTO);
+                return new ResponseEntity<>(dataMap, HttpStatus.OK);
+            } else {
+                dataMap.put("status", 1);
+                dataMap.put("data", "No registries found");
+                return new ResponseEntity<>(dataMap, HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            dataMap.put("status", 0);
+            dataMap.put("data", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
     //get member by age
     public ResponseEntity<Object> getMemberByAge(int age) {
         Map<String, Object> dataMap = new HashMap<String, Object>();

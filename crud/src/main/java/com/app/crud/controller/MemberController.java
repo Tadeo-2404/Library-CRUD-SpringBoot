@@ -30,6 +30,7 @@ public class MemberController {
     @GetMapping
     public ResponseEntity<Object> getMembers(@RequestParam Map<String,String> allParams) {
         String ID = allParams.get("ID");
+        String email = allParams.get("email");
         String name = allParams.get("name");
         String ageStr = allParams.get("age");
         Integer age = null;
@@ -52,6 +53,8 @@ public class MemberController {
 
         if (ID != null) {
             return memberService.getMemberByID(ID);
+        } else if(email != null) {
+            return memberService.getMemberByEmail(email);
         } else if (name != null) {
             return memberService.getMemberByName(name);
         } else if (lastname != null) {
