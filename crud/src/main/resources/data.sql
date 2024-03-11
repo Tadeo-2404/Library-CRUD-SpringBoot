@@ -78,28 +78,28 @@ INSERT INTO book (ISBN, title, author, genre, amount) VALUES
 (UUID(), 'Mistborn: The Bands of Mourning', 'Brandon Sanderson', 'Fantasy', 820);
 
 -- Inserting data into the Member table
-INSERT INTO Member (member_id, email, password, name, lastname, age)
+INSERT INTO Member (member_id, email, username, password, name, lastname, age)
 VALUES
-    (UUID(), 'john_doe@gmail.com', 'password123', 'John', 'Doe', 32),
-    (UUID(), 'alice_smith@gmail.com', 'password456', 'Alice', 'Smith', 28),
-    (UUID(), 'michael_johnson@gmail.com', 'password789', 'Michael', 'Johnson', 35),
-    (UUID(), 'emily_brown@gmail.com', 'password321', 'Emily', 'Brown', 40),
-    (UUID(), 'david_martinez@gmail.com', 'password654', 'David', 'Martinez', 26),
-    (UUID(), 'sarah_wilson@gmail.com', 'password987', 'Sarah', 'Wilson', 33),
-    (UUID(), 'matthew_anderson@gmail.com', 'password123', 'Matthew', 'Anderson', 45),
-    (UUID(), 'emma_taylor@gmail.com', 'password456', 'Emma', 'Taylor', 29),
-    (UUID(), 'daniel_thomas@gmail.com', 'password789', 'Daniel', 'Thomas', 38),
-    (UUID(), 'olivia_hernandez@gmail.com', 'password321', 'Olivia', 'Hernandez', 31),
-    (UUID(), 'james_young@gmail.com', 'password654', 'James', 'Young', 27),
-    (UUID(), 'sophia_garcia@gmail.com', 'password987', 'Sophia', 'Garcia', 42),
-    (UUID(), 'william_lee@gmail.com', 'password123', 'William', 'Lee', 34),
-    (UUID(), 'ava_jones@gmail.com', 'password456', 'Ava', 'Jones', 30),
-    (UUID(), 'benjamin_white@gmail.com', 'password789', 'Benjamin', 'White', 37),
-    (UUID(), 'mia_clark@gmail.com', 'password321', 'Mia', 'Clark', 39),
-    (UUID(), 'alexander_allen@gmail.com', 'password654', 'Alexander', 'Allen', 36),
-    (UUID(), 'ella_lewis@gmail.com', 'password987', 'Ella', 'Lewis', 41),
-    (UUID(), 'jackson_king@gmail.com', 'password123', 'Jackson', 'King', 25),
-    (UUID(), 'victoria_scott@gmail.com', 'password456', 'Victoria', 'Scott', 43);
+    (UUID(), 'john_doe@gmail.com', 'john_doe', 'password123', 'John', 'Doe', 32),
+    (UUID(), 'alice_smith@gmail.com', 'alice_smith', 'password456', 'Alice', 'Smith', 28),
+    (UUID(), 'michael_johnson@gmail.com', 'michael_johnson', 'password789', 'Michael', 'Johnson', 35),
+    (UUID(), 'emily_brown@gmail.com', 'emily_brown', 'password321', 'Emily', 'Brown', 40),
+    (UUID(), 'david_martinez@gmail.com', 'david_martinez', 'password654', 'David', 'Martinez', 26),
+    (UUID(), 'sarah_wilson@gmail.com', 'sarah_wilson', 'password987', 'Sarah', 'Wilson', 33),
+    (UUID(), 'matthew_anderson@gmail.com', 'matthew_anderson', 'password123', 'Matthew', 'Anderson', 45),
+    (UUID(), 'emma_taylor@gmail.com', 'emma_taylor', 'password456', 'Emma', 'Taylor', 29),
+    (UUID(), 'daniel_thomas@gmail.com', 'daniel_thomas', 'password789', 'Daniel', 'Thomas', 38),
+    (UUID(), 'olivia_hernandez@gmail.com', 'olivia_hernandez', 'password321', 'Olivia', 'Hernandez', 31),
+    (UUID(), 'james_young@gmail.com', 'james_young', 'password654', 'James', 'Young', 27),
+    (UUID(), 'sophia_garcia@gmail.com', 'sophia_garcia', 'password987', 'Sophia', 'Garcia', 42),
+    (UUID(), 'william_lee@gmail.com', 'william_lee', 'password123', 'William', 'Lee', 34),
+    (UUID(), 'ava_jones@gmail.com', 'ava_jones', 'password456', 'Ava', 'Jones', 30),
+    (UUID(), 'benjamin_white@gmail.com', 'benjamin_white', 'password789', 'Benjamin', 'White', 37),
+    (UUID(), 'mia_clark@gmail.com', 'mia_clark', 'password321', 'Mia', 'Clark', 39),
+    (UUID(), 'alexander_allen@gmail.com', 'alexander_allen', 'password654', 'Alexander', 'Allen', 36),
+    (UUID(), 'ella_lewis@gmail.com', 'ella_lewis', 'password987', 'Ella', 'Lewis', 41),
+    (UUID(), 'jackson_king@gmail.com', 'jackson_king', 'password123', 'Jackson', 'King', 25),
+    (UUID(), 'victoria_scott@gmail.com', 'victoria_scott', 'password456', 'Victoria', 'Scott', 43);
 
 -- Inserting data into the Address table
 INSERT INTO Address (address_id, street, city, state, postal_code, member_id)

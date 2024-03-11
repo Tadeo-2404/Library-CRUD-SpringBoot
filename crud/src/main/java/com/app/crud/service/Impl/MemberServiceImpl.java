@@ -717,6 +717,7 @@ public class MemberServiceImpl implements MemberService {
                     memberDTO.getMemberId(),
                     memberDTO.getEmail(),
                     memberDTO.getPassword(),
+                    memberDTO.getUsername(),
                     memberDTO.getName(),
                     memberDTO.getLastname(),
                     memberDTO.getAge(),
