@@ -17,4 +17,8 @@ public class Role {
     private String id;
     @Enumerated(EnumType.STRING)
     private ERole name;
+
+    public Role(String roleName) {
+        this.name = ERole.valueOf(roleName);
+    }
 }

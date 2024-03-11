@@ -13,6 +13,10 @@ public interface MemberService {
     public ResponseEntity<Object> getMemberByID(String memberId);
     //get member by name
     public ResponseEntity<Object> getMemberByName(String name);
+    //get member by email
+    public ResponseEntity<Object> getMemberByEmail(String email);
+    //get member by username
+    public ResponseEntity<Object> getMemberByUsername(String username);
     //get member by lastname
     public ResponseEntity<Object> getMemberByLastname(String lastname);
     //get member by age
