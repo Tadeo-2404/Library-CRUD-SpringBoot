@@ -709,6 +709,34 @@ public class MemberServiceImpl implements MemberService {
         }
     }
 
+    @Override
+    public ResponseEntity<Object> addMember(MemberDTO memberDTO) {
+        Map<String, Object> dataMap = new HashMap<String, Object>();
+        try {
+            // Convert DTOs to entities
+            Member member = new Member(
+                    memberDTO.getMemberId(),
+                    memberDTO.getEmail(),
+                    memberDTO.getPassword(),
+                    memberDTO.getUsername(),
+                    memberDTO.getName(),
+                    memberDTO.getLastname(),
+                    memberDTO.getAge(),
+                    memberDTO.getRoles()
+            );
+
+            // Save the member
+            Member memberSaved = this.memberRepository.save(member);
+
+            dataMap.put("status", 1);
+            dataMap.put("data", memberSaved);
+            return new ResponseEntity<>(dataMap, HttpStatus.CREATED);
+        } catch (Exception e) {
+            dataMap.put("message", e.getMessage());
+            return new ResponseEntity<>(dataMap, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     public ResponseEntity<Object> addMember(MemberDTO memberDTO, AddressDTO addressDTO) {
         Map<String, Object> dataMap = new HashMap<String, Object>();
         try {

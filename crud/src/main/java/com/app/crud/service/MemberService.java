@@ -72,6 +72,8 @@ public interface MemberService {
     // Get members by street, city, state, and postal code
     public ResponseEntity<Object> getMembersByStreetAndCityAndStateAndPostalCode(String street, String city, String state, String postalCode);
 
+    public ResponseEntity<Object> addMember(MemberDTO memberDTO);
+
     public ResponseEntity<Object> addMember(MemberDTO memberDTO, AddressDTO addressDTO);
 
     public ResponseEntity<Object> editMember(MemberDTO memberDTO, AddressDTO addressDTO);

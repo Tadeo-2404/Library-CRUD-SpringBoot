@@ -2,29 +2,41 @@ package com.app.crud.controller;
 
 import com.app.crud.dto.AddressDTO;
 import com.app.crud.dto.MemberDTO;
+import com.app.crud.dto.mapper.AddressDTOMapper;
+import com.app.crud.dto.mapper.MemberDTOMapper;
+import com.app.crud.dto.request.member.MemberRequest;
 import com.app.crud.model.address.Address;
 import com.app.crud.model.book.Book;
 import com.app.crud.model.member.Member;
+import com.app.crud.model.member.Role;
 import com.app.crud.service.BookService;
 import com.app.crud.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 @RequestMapping(path = "api/v1/members")
 public class MemberController {
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
+    private final MemberDTOMapper memberDTOMapper;
+    private final AddressDTOMapper addressDTOMapper;
 
     @Autowired
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService,
+                            PasswordEncoder passwordEncoder,
+                            MemberDTOMapper memberDTOMapper,
+                            AddressDTOMapper addressDTOMapper) {
         this.memberService = memberService;
+        this.passwordEncoder = passwordEncoder;
+        this.memberDTOMapper = memberDTOMapper;
+        this.addressDTOMapper = addressDTOMapper;
     }
 
     @GetMapping
@@ -64,40 +76,31 @@ public class MemberController {
         }
     }
 
-    public static class MemberRegistrationRequest {
-        private MemberDTO member;
-        private AddressDTO address;
-        public MemberDTO getMember() {
-            return member;
-        }
-        public AddressDTO getAddress() {
-            return address;
-        }
-    }
-
-    public static class MemberEditionRequest {
-        private MemberDTO member;
-        private AddressDTO address;
-        public MemberDTO getMember() {
-            return member;
-        }
-        public AddressDTO getAddress() {
-            return address;
-        }
-    }
-
     @PostMapping
-    public ResponseEntity<Object> registerMember(@RequestBody MemberRegistrationRequest request) {
-        MemberDTO member = request.getMember();
-        AddressDTO address = request.getAddress();
-        return this.memberService.addMember(member, address);
+    public ResponseEntity<Object> registerMember(@RequestBody MemberRequest request) {
+        Member member = request.getMember();
+        Address address = request.getAddress();
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
+        // Create a set to store roles
+        Set<Role> roles = new HashSet<>();
+        for (Role role: member.getRoles()) {
+            roles.add(role);
+        }
+        // Set the roles for the member
+        member.setRoles(roles);
+
+        if(member != null && address != null) {
+            return this.memberService.addMember(memberDTOMapper.mapToMemberDTO(member), addressDTOMapper.mapToAddressDTO(address));
+        }
+
+        return this.memberService.addMember(memberDTOMapper.mapToMemberDTO(member));
     }
 
     @PutMapping
-    public ResponseEntity<Object> editMember(@RequestBody MemberEditionRequest request) {
-        MemberDTO member = request.getMember();
-        AddressDTO address = request.getAddress();
-        return this.memberService.editMember(member, address);
+    public ResponseEntity<Object> editMember(@RequestBody MemberRequest request) {
+        Member member = request.getMember();
+        Address address = request.getAddress();
+        return this.memberService.editMember(memberDTOMapper.mapToMemberDTO(member), addressDTOMapper.mapToAddressDTO(address));
     }
 
     @DeleteMapping

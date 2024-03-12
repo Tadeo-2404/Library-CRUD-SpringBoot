@@ -2,15 +2,15 @@ package com.app.crud.dto;
 
 import com.app.crud.model.member.Role;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Set;
 
+@Data
 @AllArgsConstructor
-@Setter
-@Getter
 public class MemberDTO implements Serializable {
     final String memberId;
     final String email;

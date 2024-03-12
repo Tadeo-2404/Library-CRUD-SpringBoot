@@ -28,8 +28,12 @@ public class SecurityConfiguration {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
-           registry.requestMatchers("/api/v1/register/**").permitAll();
+           registry.requestMatchers("/api/v1/books").permitAll();
+           registry.requestMatchers("/api/v1/addresses").hasRole("CLIENT");
+           registry.requestMatchers("/api/v1/loans").hasRole("CLIENT");
+           registry.requestMatchers("/api/v1/members").hasRole("CLIENT");
            registry.requestMatchers("/api/v1/members").hasRole("ADMIN");
+           registry.requestMatchers("/api/v1/memberBooks").hasRole("ADMIN");
            registry.anyRequest().authenticated();
         })
                 .httpBasic(Customizer.withDefaults())

@@ -1,14 +1,11 @@
 package com.app.crud.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-
+import lombok.Data;
 import java.io.Serializable;
 
+@Data
 @AllArgsConstructor
-@Setter
-@Getter
 public class AddressDTO implements Serializable {
     private final String address_id;
     private final String street;
