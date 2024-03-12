@@ -19,15 +19,15 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "memberId", unique = true, nullable = false)
     private String memberId;
-    @Column(name = "email", nullable = false, length = 50)
+    @Column(name = "email", nullable = false, length = 250)
     private String email;
-    @Column(name = "username", nullable = false, length = 50)
+    @Column(name = "username", nullable = false, length = 250)
     private String username;
     @Column(name = "password", nullable = false, length = 250)
     private String password;
-    @Column(name = "name", nullable = false, length = 50)
+    @Column(name = "name", nullable = false, length = 250)
     private String name;
-    @Column(name = "lastname", nullable = false, length = 50)
+    @Column(name = "lastname", nullable = false, length = 250)
     private String lastname;
     @Column(name = "age", nullable = true)
     private int age;
