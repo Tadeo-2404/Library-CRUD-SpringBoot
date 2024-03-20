@@ -11,6 +11,8 @@ import com.app.crud.service.MemberService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -31,6 +33,11 @@ public class MemberServiceImpl implements MemberService {
         this.memberRepository = memberRepository;
         this.addressRepository = addressRepository;
         this.memberDTOMapper = memberDTOMapper;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return memberRepository.getByUsername(username);
     }
 
     //get all members
