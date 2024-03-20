@@ -3,9 +3,11 @@ package com.app.crud.service;
 import com.app.crud.dto.AddressDTO;
 import com.app.crud.dto.MemberDTO;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
 import java.util.List;
 
-public interface MemberService {
+public interface MemberService extends UserDetailsService {
 
     //get all members
     public ResponseEntity<Object> getMembers();
