@@ -9,11 +9,13 @@ import com.app.crud.model.address.Address;
 import com.app.crud.model.book.Book;
 import com.app.crud.model.member.Member;
 import com.app.crud.model.member.Role;
+import com.app.crud.repository.MemberRepository;
 import com.app.crud.service.BookService;
 import com.app.crud.service.MemberService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -27,16 +29,19 @@ public class MemberController {
     private final PasswordEncoder passwordEncoder;
     private final MemberDTOMapper memberDTOMapper;
     private final AddressDTOMapper addressDTOMapper;
+    private final MemberRepository memberRepository;
 
     @Autowired
     public MemberController(MemberService memberService,
                             PasswordEncoder passwordEncoder,
                             MemberDTOMapper memberDTOMapper,
-                            AddressDTOMapper addressDTOMapper) {
+                            AddressDTOMapper addressDTOMapper,
+                            MemberRepository memberRepository) {
         this.memberService = memberService;
         this.passwordEncoder = passwordEncoder;
         this.memberDTOMapper = memberDTOMapper;
         this.addressDTOMapper = addressDTOMapper;
+        this.memberRepository = memberRepository;
     }
 
     @GetMapping
@@ -76,7 +81,7 @@ public class MemberController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<Object> registerMember(@RequestBody MemberRequest request) {
         Member member = request.getMember();
         Address address = request.getAddress();
@@ -88,12 +93,7 @@ public class MemberController {
         }
         // Set the roles for the member
         member.setRoles(roles);
-
-        if(member != null && address != null) {
-            return this.memberService.addMember(memberDTOMapper.mapToMemberDTO(member), addressDTOMapper.mapToAddressDTO(address));
-        }
-
-        return this.memberService.addMember(memberDTOMapper.mapToMemberDTO(member));
+        return memberService.addMember(memberDTOMapper.mapToMemberDTO(member));
     }
 
     @PutMapping

@@ -7,11 +7,7 @@ import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -52,11 +48,12 @@ public class Member implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Set<Role> roles = this.getRoles(); // Assuming getRoles() returns a Set<Object>
-        return roles.stream()
-                .map(Role::toString) // Convert roles to String
-                .map(SimpleGrantedAuthority::new) // Create SimpleGrantedAuthority objects
-                .collect(Collectors.toList()); // Collect into a List
+        List<GrantedAuthority> authorityList = new ArrayList<>();
+        for (Role role: this.roles) {
+            SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.getName().toString());
+            authorityList.add(authority);
+        }
+        return authorityList;
     }
 
     @Override

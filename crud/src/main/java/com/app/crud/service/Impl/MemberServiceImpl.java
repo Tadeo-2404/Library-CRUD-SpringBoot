@@ -719,21 +719,10 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public ResponseEntity<Object> addMember(MemberDTO memberDTO) {
         Map<String, Object> dataMap = new HashMap<String, Object>();
-        try {
-            // Convert DTOs to entities
-            Member member = new Member(
-                    memberDTO.getMemberId(),
-                    memberDTO.getEmail(),
-                    memberDTO.getPassword(),
-                    memberDTO.getUsername(),
-                    memberDTO.getName(),
-                    memberDTO.getLastname(),
-                    memberDTO.getAge(),
-                    memberDTO.getRoles()
-            );
 
+        try {
             // Save the member
-            Member memberSaved = this.memberRepository.save(member);
+            Member memberSaved = this.memberRepository.save(memberDTOMapper.mapToMember(memberDTO));
 
             dataMap.put("status", 1);
             dataMap.put("data", memberSaved);
@@ -747,19 +736,8 @@ public class MemberServiceImpl implements MemberService {
     public ResponseEntity<Object> addMember(MemberDTO memberDTO, AddressDTO addressDTO) {
         Map<String, Object> dataMap = new HashMap<String, Object>();
         try {
-            // Convert DTOs to entities
-            Member member = new Member(
-                    memberDTO.getMemberId(),
-                    memberDTO.getEmail(),
-                    memberDTO.getPassword(),
-                    memberDTO.getUsername(),
-                    memberDTO.getName(),
-                    memberDTO.getLastname(),
-                    memberDTO.getAge(),
-                    memberDTO.getRoles()
-            );
             Address address = new Address(
-                    member, // Member should be passed as the first parameter
+                    memberDTOMapper.mapToMember(memberDTO), // Member should be passed as the first parameter
                     addressDTO.getStreet(),
                     addressDTO.getCity(),
                     addressDTO.getState(),
@@ -767,13 +745,13 @@ public class MemberServiceImpl implements MemberService {
             );
 
             // Save the member
-            Member memberSaved = this.memberRepository.save(member);
+            Member memberSaved = this.memberRepository.save(memberDTOMapper.mapToMember(memberDTO));
 
             // Set the member ID in address
             address.setMember(memberSaved);
 
             // Save the address
-            Address addressSaved = this.addressRepository.save(address);
+            this.addressRepository.save(address);
 
             // Save the updated member
             this.memberRepository.save(memberSaved);

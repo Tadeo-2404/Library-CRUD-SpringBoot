@@ -18,30 +18,29 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfiguration {
     @Autowired
-    private MyUserDetailService myUserDetailService;
+    private UserDetailService userDetailService;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(registry -> {
-           registry.requestMatchers("/api/v1/books").permitAll();
-           registry.anyRequest().authenticated();
-        })
+        return http.
+                csrf(AbstractHttpConfigurer::disable)
                 .httpBasic(Customizer.withDefaults())
                 .formLogin(AbstractAuthenticationFilterConfigurer::permitAll)
-                .build();
+                .authorizeHttpRequests(req->req
+                        .requestMatchers("api/v1/members/register").permitAll()
+                        .anyRequest().authenticated())
+                .userDetailsService(userDetailService).build();
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return myUserDetailService;
+        return userDetailService;
     }
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-        provider.setUserDetailsService(myUserDetailService);
+        provider.setUserDetailsService(userDetailService);
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
