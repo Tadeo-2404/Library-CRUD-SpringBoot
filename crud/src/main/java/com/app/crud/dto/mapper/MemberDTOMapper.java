@@ -27,8 +27,8 @@ public class MemberDTOMapper  {
         return new Member(
                 memberDTO.getMemberId(),
                 memberDTO.getEmail(),
-                memberDTO.getPassword(),
                 memberDTO.getUsername(),
+                memberDTO.getPassword(),
                 memberDTO.getName(),
                 memberDTO.getLastname(),
                 memberDTO.getAge(),
