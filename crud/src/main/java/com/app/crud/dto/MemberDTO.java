@@ -1,5 +1,6 @@
 package com.app.crud.dto;
 
+import com.app.crud.model.member.Permission;
 import com.app.crud.model.member.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,4 +21,5 @@ public class MemberDTO implements Serializable {
     final String lastname;
     final int age;
     final Set<Role> roles;
+    final Set<Permission> permissions;
 }
