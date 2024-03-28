@@ -8,6 +8,7 @@ import com.app.crud.dto.request.member.MemberRequest;
 import com.app.crud.model.address.Address;
 import com.app.crud.model.book.Book;
 import com.app.crud.model.member.Member;
+import com.app.crud.model.member.Permission;
 import com.app.crud.model.member.Role;
 import com.app.crud.repository.MemberRepository;
 import com.app.crud.service.BookService;
@@ -91,8 +92,17 @@ public class MemberController {
         for (Role role: member.getRoles()) {
             roles.add(role);
         }
+        // Create a set to store permissions
+        Set<Permission> permissions = new HashSet<>();
+        for (Permission permission: member.getPermissions()) {
+            permissions.add(permission);
+        }
         // Set the roles for the member
         member.setRoles(roles);
+        // Set the permissions for the member
+        System.out.println("permissions: " + permissions);
+        member.setPermissions(permissions);
+        System.out.println("permissions meber: " + member.getPermissions());
         return memberService.addMember(memberDTOMapper.mapToMemberDTO(member));
     }
 

@@ -19,7 +19,8 @@ public class MemberDTOMapper  {
                 member.getName(),
                 member.getLastname(),
                 member.getAge(),
-                member.getRoles()
+                member.getRoles(),
+                member.getPermissions()
         );
     }
 
@@ -32,7 +33,8 @@ public class MemberDTOMapper  {
                 memberDTO.getName(),
                 memberDTO.getLastname(),
                 memberDTO.getAge(),
-                memberDTO.getRoles()
+                memberDTO.getRoles(),
+                memberDTO.getPermissions()
         );
     }
 }

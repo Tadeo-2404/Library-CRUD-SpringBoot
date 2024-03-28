@@ -46,6 +46,19 @@ public class Member implements UserDetails {
     )
     private Set<Role> roles = new HashSet<>();
 
+    @ManyToMany(
+            fetch = FetchType.EAGER,
+            targetEntity = Permission.class,
+            cascade = CascadeType.PERSIST
+    )
+    @JoinTable(
+            name = "member_permissions",
+            joinColumns = @JoinColumn(name = "member_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "permission_id", nullable = false)
+
+    )
+    private Set<Permission> permissions = new HashSet<>();
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorityList = new ArrayList<>();
