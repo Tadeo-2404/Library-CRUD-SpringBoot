@@ -11,11 +11,14 @@ import java.util.function.Function;
 @Service
 public class MemberDTOMapper  {
     public MemberDTO mapToMemberDTO(Member member) {
+        if(member == null) {
+            throw new NullPointerException("Member is null");
+        }
         return new MemberDTO(
                 member.getMemberId(),
                 member.getEmail(),
-                member.getPassword(),
                 member.getUsername(),
+                member.getPassword(),
                 member.getName(),
                 member.getLastname(),
                 member.getAge(),
@@ -25,6 +28,9 @@ public class MemberDTOMapper  {
     }
 
     public Member mapToMember(MemberDTO memberDTO) {
+        if(memberDTO == null) {
+            throw new NullPointerException("MemberDTO is null");
+        }
         return new Member(
                 memberDTO.getMemberId(),
                 memberDTO.getEmail(),
