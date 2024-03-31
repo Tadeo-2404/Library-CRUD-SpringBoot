@@ -9,6 +9,9 @@ import java.util.function.Function;
 @Service
 public class AddressDTOMapper {
     public AddressDTO mapToAddressDTO(Address address) {
+        if(address == null) {
+            throw new NullPointerException("Address param is null");
+        }
         return new AddressDTO(
                 address.getAddress_id(),
                 address.getStreet(),
@@ -19,6 +22,9 @@ public class AddressDTOMapper {
     }
 
     public Address mapToAddress(AddressDTO addressDTO) {
+        if(addressDTO == null) {
+            throw new NullPointerException("AddressDTO param is null");
+        }
         return new Address(
                 addressDTO.getAddress_id(),
                 addressDTO.getStreet(),
