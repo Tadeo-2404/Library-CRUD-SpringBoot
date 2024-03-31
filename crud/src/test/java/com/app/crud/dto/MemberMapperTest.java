@@ -1,4 +1,4 @@
-package com.app.crud.UnitTest.dto;
+package com.app.crud.dto;
 
 import com.app.crud.dto.MemberDTO;
 import com.app.crud.dto.mapper.MemberDTOMapper;
