@@ -25,4 +25,11 @@ public class Book {
     private String genre;
     @Column(name = "amount", nullable = false)
     private int amount;
+
+    public Book(String title, String author, String genre, int amount) {
+        this.title = title;
+        this.author = author;
+        this.genre = genre;
+        this.amount = amount;
+    }
 }
