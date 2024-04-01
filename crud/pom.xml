@@ -76,6 +76,12 @@
 			<artifactId>h2</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-junit5</artifactId>
+			<version>2.16.0</version> <!-- Replace with the appropriate version -->
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 	<build>

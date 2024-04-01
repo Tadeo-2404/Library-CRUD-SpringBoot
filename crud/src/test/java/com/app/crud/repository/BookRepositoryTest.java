@@ -28,6 +28,12 @@ public class BookRepositoryTest {
         Assertions.assertEquals(bookList.get(0).getTitle(), this.book.getTitle(), "Title not found");
     }
 
+    @Test
+    public void findByTitleNotFound() {
+        List<Book> bookList = this.bookRepository.findByTitle("Unknown");
+        Assertions.assertTrue(bookList.isEmpty(), "Title found");
+    }
+
     @AfterEach
     public void teardown() {
         this.book = null;
