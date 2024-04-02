@@ -83,6 +83,42 @@ public class BookRepositoryTest {
         Assertions.assertTrue(bookList.isEmpty(), "Author found");
     }
 
+    @Test
+    public void findByGenreFoundTest() {
+        suite("findByGenre");
+        step("Query findByGenre method");
+        List<Book> bookList = this.bookRepository.findByGenre(this.book.getGenre());
+        step("Compares if book list if equal to book");
+        Assertions.assertEquals(bookList.get(0).getGenre(), this.book.getGenre(), "Genre not found");
+    }
+
+    @Test
+    public void findByGenreNotFoundTest() {
+        suite("findByGenre");
+        step("Query findByGenre method passing argument with no results");
+        List<Book> bookList = this.bookRepository.findByGenre("Unknown");
+        step("Check if list is empty");
+        Assertions.assertTrue(bookList.isEmpty(), "Genre found");
+    }
+
+    @Test
+    public void findByAmountFoundTest() {
+        suite("findByAmount");
+        step("Query findByAmount method");
+        List<Book> bookList = this.bookRepository.findByAmount(this.book.getAmount());
+        step("Compares if book list if equal to book");
+        Assertions.assertEquals(bookList.get(0).getAmount(), this.book.getAmount(), "Amount not found");
+    }
+
+    @Test
+    public void findByAmountNotFoundTest() {
+        suite("findByAmount");
+        step("Query findByAmount method passing argument with no results");
+        List<Book> bookList = this.bookRepository.findByAmount(100);
+        step("Check if list is empty");
+        Assertions.assertTrue(bookList.isEmpty(), "Amount found");
+    }
+
     @AfterEach
     public void teardown() {
         this.book = null;
