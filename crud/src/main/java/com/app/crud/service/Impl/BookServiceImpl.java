@@ -56,11 +56,10 @@ public class BookServiceImpl implements BookService {
 
         try {
             Book book = this.bookRepository.findByISBN(ISBN);
-            BookDTO bookDTO = bookDTOMapper.mapToBookDTO(book);
 
             if(book != null) {
                 dataMap.put("status", 1);
-                dataMap.put("data", bookDTO);
+                dataMap.put("data", bookDTOMapper.mapToBookDTO(book));
                 return new ResponseEntity<>(dataMap, HttpStatus.OK);
             } else {
                 dataMap.put("status", 1);
@@ -451,28 +450,13 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    public ResponseEntity<Object> newProduct(BookDTO book) {
+    public ResponseEntity<Object> newProduct(Book book) {
         Map<String, Object> dataMap = new HashMap<String, Object>();
         try {
-            if(book.getISBN() != null) {
-                dataMap.put("status", 1);
-                dataMap.put("data", book);
-                dataMap.put("message", "book edited successfully");
-            } else {
-                dataMap.put("status", 1);
-                dataMap.put("data", book);
-                dataMap.put("message", "book created successfully");
-            }
-
-            Book bookToSave = new Book(
-                    book.getISBN(),
-                    book.getTitle(),
-                    book.getAuthor(),
-                    book.getGenre(),
-                    book.getAmount()
-            );
-
-            this.bookRepository.save(bookToSave);
+            this.bookRepository.save(book);
+            dataMap.put("status", 1);
+            dataMap.put("data", book);
+            dataMap.put("message", "book created successfully");
             return new ResponseEntity<>(dataMap, HttpStatus.OK);
         } catch (Exception e) {
             dataMap.put("status", 1);

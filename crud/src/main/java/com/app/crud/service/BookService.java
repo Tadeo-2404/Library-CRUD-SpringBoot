@@ -50,7 +50,7 @@ public interface BookService {
     // Four Parameters
     public ResponseEntity<Object> getBooksByTitleAndAuthorAndGenreAndAmount(String title, String author, String genre, int amount);
 
-    public ResponseEntity<Object> newProduct(BookDTO book);
+    public ResponseEntity<Object> newProduct(Book book);
 
     public ResponseEntity<Object> removeBook(String isbn);
 }
