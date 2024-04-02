@@ -75,7 +75,6 @@ class BookServiceImplTest {
         assertEquals(mockedBookDTO.getTitle(), data.get(0).getTitle(), "Title of first book should match");
     }
 
-
     @Test
     void getBooksByISBN() {
         step("Mock behavior of BookRepository");
@@ -115,62 +114,122 @@ class BookServiceImplTest {
 
     @Test
     void getBooksByTitle() {
+        // Mock behavior of BookRepository
+        when(bookRepository.findByTitle(this.book.getTitle())).thenReturn(
+                Collections.singletonList(book)
+        );
+
+        // Mock behavior of BookDTOMapper to return a valid BookDTO object
+        when(bookDTOMapper.mapToBookDTO(any(Book.class)))
+                .thenReturn(new BookDTO(book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getAmount()));
+
+        // Invoke the method under test
+        ResponseEntity<Object> responseEntity = bookService.getBooksByTitle(this.book.getTitle());
+        Map<String, Object> responseBody = (Map<String, Object>) responseEntity.getBody();
+        List<BookDTO> books = (List<BookDTO>) responseBody.get("data");
+        int status = (int) responseBody.get("status");
+
+        step("Verify the HTTP response status");
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode(), "HTTP Status should be OK");
+
+        step("Verify status 1");
+        assertEquals(1, status, "Status should be 1 (success)");
+
+        step("Verify data is not null");
+        assertNotNull(books);
+
+        step("check if data is equal");
+        assertEquals(book.getISBN(), books.get(0).getISBN(), "Attributes does not match");
     }
 
     @Test
     void getBooksByAuthor() {
+        // Mock behavior of BookRepository
+        when(bookRepository.findByAuthor(this.book.getAuthor())).thenReturn(
+                Collections.singletonList(book)
+        );
+
+        // Mock behavior of BookDTOMapper to return a valid BookDTO object
+        when(bookDTOMapper.mapToBookDTO(any(Book.class)))
+                .thenReturn(new BookDTO(book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getAmount()));
+
+        // Invoke the method under test
+        ResponseEntity<Object> responseEntity = bookService.getBooksByAuthor(this.book.getAuthor());
+        Map<String, Object> responseBody = (Map<String, Object>) responseEntity.getBody();
+        List<BookDTO> books = (List<BookDTO>) responseBody.get("data");
+        int status = (int) responseBody.get("status");
+
+        step("Verify the HTTP response status");
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode(), "HTTP Status should be OK");
+
+        step("Verify status 1");
+        assertEquals(1, status, "Status should be 1 (success)");
+
+        step("Verify data is not null");
+        assertNotNull(books);
+
+        step("check if data is equal");
+        assertEquals(book.getISBN(), books.get(0).getISBN(), "Attributes does not match");
     }
 
     @Test
     void getBooksByGenre() {
+        // Mock behavior of BookRepository
+        when(bookRepository.findByGenre(this.book.getGenre())).thenReturn(
+                Collections.singletonList(book)
+        );
+
+        // Mock behavior of BookDTOMapper to return a valid BookDTO object
+        when(bookDTOMapper.mapToBookDTO(any(Book.class)))
+                .thenReturn(new BookDTO(book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getAmount()));
+
+        // Invoke the method under test
+        ResponseEntity<Object> responseEntity = bookService.getBooksByGenre(this.book.getGenre());
+        Map<String, Object> responseBody = (Map<String, Object>) responseEntity.getBody();
+        List<BookDTO> books = (List<BookDTO>) responseBody.get("data");
+        int status = (int) responseBody.get("status");
+
+        step("Verify the HTTP response status");
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode(), "HTTP Status should be OK");
+
+        step("Verify status 1");
+        assertEquals(1, status, "Status should be 1 (success)");
+
+        step("Verify data is not null");
+        assertNotNull(books);
+
+        step("check if data is equal");
+        assertEquals(book.getISBN(), books.get(0).getISBN(), "Attributes does not match");
     }
 
     @Test
     void getBooksByAmount() {
-    }
+        // Mock behavior of BookRepository
+        when(bookRepository.findByAmount(this.book.getAmount())).thenReturn(
+                Collections.singletonList(book)
+        );
 
-    @Test
-    void getBooksByTitleAndAuthor() {
-    }
+        // Mock behavior of BookDTOMapper to return a valid BookDTO object
+        when(bookDTOMapper.mapToBookDTO(any(Book.class)))
+                .thenReturn(new BookDTO(book.getISBN(), book.getTitle(), book.getAuthor(), book.getGenre(), book.getAmount()));
 
-    @Test
-    void getBooksByTitleAndGenre() {
-    }
+        // Invoke the method under test
+        ResponseEntity<Object> responseEntity = bookService.getBooksByAmount(this.book.getAmount());
+        Map<String, Object> responseBody = (Map<String, Object>) responseEntity.getBody();
+        List<BookDTO> books = (List<BookDTO>) responseBody.get("data");
+        int status = (int) responseBody.get("status");
 
-    @Test
-    void getBooksByTitleAndAmount() {
-    }
+        step("Verify the HTTP response status");
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode(), "HTTP Status should be OK");
 
-    @Test
-    void getBooksByAuthorAndGenre() {
-    }
+        step("Verify status 1");
+        assertEquals(1, status, "Status should be 1 (success)");
 
-    @Test
-    void getBooksByAuthorAndAmount() {
-    }
+        step("Verify data is not null");
+        assertNotNull(books);
 
-    @Test
-    void getBooksByGenreAndAmount() {
-    }
-
-    @Test
-    void getBooksByTitleAndAuthorAndGenre() {
-    }
-
-    @Test
-    void getBooksByTitleAndAuthorAndAmount() {
-    }
-
-    @Test
-    void getBooksByTitleAndGenreAndAmount() {
-    }
-
-    @Test
-    void getBooksByAuthorAndGenreAndAmount() {
-    }
-
-    @Test
-    void getBooksByTitleAndAuthorAndGenreAndAmount() {
+        step("check if data is equal");
+        assertEquals(book.getISBN(), books.get(0).getISBN(), "Attributes does not match");
     }
 
     @Test
@@ -201,8 +260,28 @@ class BookServiceImplTest {
         assertEquals(book.getTitle(), responseData.getTitle(), "Title in response data should match");
     }
 
-
     @Test
     void removeBook() {
+        // Mock behavior of bookRepository.existsById() to return true
+        when(bookRepository.existsById(this.book.getISBN())).thenReturn(true);
+
+        // Invoke the method under test
+        ResponseEntity<Object> responseEntity = bookService.removeBook(this.book.getISBN());
+        Map<String, Object> dataMap = (Map<String, Object>) responseEntity.getBody();
+
+        // Verify the HTTP response status
+        step("Verify the HTTP response status");
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode(), "HTTP Status should be OK");
+
+        // Verify the status response
+        step("Verify the status response");
+        int status = (int) dataMap.get("status");
+        assertEquals(1, status, "Status should be 1 (success)");
+
+        // Verify the data response
+        step("Verify the data response");
+        Object data = dataMap.get("data");
+        assertNotNull(data, "Data should not be null");
+        assertEquals("Book deleted successfully", data, "Message should indicate successful deletion");
     }
 }
