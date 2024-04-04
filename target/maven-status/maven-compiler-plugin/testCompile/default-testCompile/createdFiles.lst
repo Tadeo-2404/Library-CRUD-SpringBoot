@@ -1,0 +1,10 @@
+com\app\crud\model\MemberModelTest.class
+com\app\crud\model\AddressModelTest.class
+com\app\crud\service\Impl\BookServiceImplTest.class
+com\app\crud\dto\BookMapperTest.class
+com\app\crud\dto\LoanMapperTest.class
+com\app\crud\dto\MemberMapperTest.class
+com\app\crud\model\LoanModelTest.class
+com\app\crud\dto\AddressMapperTest.class
+com\app\crud\repository\BookRepositoryTest.class
+com\app\crud\model\BookModelTest.class
