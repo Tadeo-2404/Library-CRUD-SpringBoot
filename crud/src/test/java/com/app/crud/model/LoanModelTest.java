@@ -26,8 +26,9 @@ public class LoanModelTest {
         expectedPermissions.add(new Permission(EPermission.CREATE_BOOK.toString()));
         //declare expected member object
         Member expectedMember = new Member("memberID", "mail@mail.com", "username", "password", "name", "lastname", 20, expectedRoles, expectedPermissions);
-        //declare expected loan
-        loan = new Loan("loanID", LocalDateTime.now(), LocalDateTime.now(), expectedMember);
+        //declare expected loan with fixed dates
+        LocalDateTime fixedDate = LocalDateTime.of(2024, 4, 3, 17, 51, 49);
+        loan = new Loan("loanID", fixedDate, fixedDate.plusHours(1), expectedMember);
     }
 
     @Test
@@ -62,14 +63,14 @@ public class LoanModelTest {
 
     @Test
     public void getDateBorrowTest() {
-        LocalDateTime expectedValue = LocalDateTime.now();
+        LocalDateTime expectedValue = LocalDateTime.of(2024, 4, 3, 17, 51, 49);
         LocalDateTime actualValue = loan.getDateBorrow();
         Assertions.assertEquals(expectedValue, actualValue, "DateBorrow does not match");
     }
 
     @Test
     public void getDateLimitTest() {
-        LocalDateTime expectedValue = LocalDateTime.now();
+        LocalDateTime expectedValue = LocalDateTime.of(2024, 4, 3, 18, 51, 49); // Adjusted by adding 1 hour
         LocalDateTime actualValue = loan.getDateLimit();
         Assertions.assertEquals(expectedValue, actualValue, "DateLimit does not match");
     }
