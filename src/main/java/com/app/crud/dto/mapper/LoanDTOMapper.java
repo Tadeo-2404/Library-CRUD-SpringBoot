@@ -3,7 +3,6 @@ package com.app.crud.dto.mapper;
 import com.app.crud.dto.AddressDTO;
 import com.app.crud.dto.LoanDTO;
 import com.app.crud.dto.MemberDTO;
-import com.app.crud.model.address.Address;
 import com.app.crud.model.loan.Loan;
 import com.app.crud.model.member.Member;
 import org.springframework.stereotype.Service;
@@ -31,8 +30,8 @@ public class LoanDTOMapper {
         );
         return new LoanDTO(
                 loan.getID(),  // Changed from loan.getID() to loan.getId()
-                loan.getDateLimit(),
                 loan.getDateBorrow(),
+                loan.getDateLimit(),
                 memberDTO
         );
     }
@@ -58,9 +57,9 @@ public class LoanDTOMapper {
         );
 
         return new Loan(
-                loanDTO.getID(),  // Changed from loanDTO.getID() to loanDTO.getId()
-                loanDTO.getDateLimit(),
+                loanDTO.getID(),
                 loanDTO.getDateBorrow(),
+                loanDTO.getDateLimit(),
                 member
         );
     }

@@ -35,8 +35,11 @@ public class LoanMapperTest {
 
         //declare expected member object
         MemberDTO expectedMember = new MemberDTO("memberID", "mail@mail.com", "username", "password", "name", "lastname", 20, expectedRoles, expectedPermissions);
+
+        LocalDateTime fixedDate = LocalDateTime.of(2024, 4, 3, 17, 51, 49);
+
         //declare expected loan
-        LoanDTO expected = new LoanDTO("loanID", LocalDateTime.now(), LocalDateTime.now(), expectedMember);
+        LoanDTO expected = new LoanDTO("loanID", fixedDate, fixedDate.plusHours(1), expectedMember);
 
         //obtain actual loan
         Loan actual = loanDTOMapper.mapToLoan(expected);
@@ -99,8 +102,10 @@ public class LoanMapperTest {
         //declare expected member object
         Member expectedMember = new Member("memberID", "mail@mail.com", "username", "password", "name", "lastname", 20, expectedRoles, expectedPermissions);
 
+        LocalDateTime fixedDate = LocalDateTime.of(2024, 4, 3, 17, 51, 49);
+
         //declare expected loan
-        Loan expected = new Loan("loanID", LocalDateTime.now(), LocalDateTime.now(), expectedMember);
+        Loan expected = new Loan("loanID", fixedDate, fixedDate.plusHours(1), expectedMember);
 
         //obtain actual loan
         LoanDTO actual = loanDTOMapper.mapToLoanDTO(expected);
@@ -112,7 +117,7 @@ public class LoanMapperTest {
         Assertions.assertNotNull(actual.getDateLimit(), "DateLimit is null");
         Assertions.assertNotNull(actual.getDateBorrow(), "DateBorrow is null");
         Assertions.assertEquals(expected.getDateBorrow(), actual.getDateBorrow(), "DateBorrow does not match");
-        Assertions.assertEquals(expected.getDateLimit(), actual.getDateLimit(), "DateBorrow does not match");
+        Assertions.assertEquals(expected.getDateLimit(), actual.getDateLimit(), "DateLimit does not match");
 
         //check loan's member attributes
         Assertions.assertEquals(expected.getMember().getMemberId(), actual.getMemberDTO().getMemberId(), "Attribute memberID does not match");
